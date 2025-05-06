@@ -15,19 +15,21 @@ export function RootPageStatusMaintenanceView() {
     const element = elementRef.current;
     if (!element) return;
 
-    import('lottie-web').then(({ default: lottie }) => {
-      // アニメーションを読み込む
-      lottie.loadAnimation({
-        container: element,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: IllustrationUrl,
-      });
+    import('lottie-web/build/player/lottie_light.js').then(
+      ({ default: lottie }) => {
+        // アニメーションを読み込む
+        lottie.loadAnimation({
+          container: element,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: IllustrationUrl,
+        });
 
-      // アニメーションが読み込まれたら true にする
-      setHasIllustrationLoaded(true);
-    });
+        // アニメーションが読み込まれたら true にする
+        setHasIllustrationLoaded(true);
+      },
+    );
   }, []);
 
   return (
