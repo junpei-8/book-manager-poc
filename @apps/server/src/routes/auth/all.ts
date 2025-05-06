@@ -7,7 +7,7 @@ import { auth } from '../../utils/auth';
  * Auth all API.
  */
 export const authAllApi = new Hono().on(
-  ['GET', 'POST'],
+  ['GET', 'POST', 'OPTIONS'],
   '/auth/*',
   cors({
     origin: PRIVATE_AUTH_API_ACCESS_ORIGINS,

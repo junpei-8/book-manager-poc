@@ -78,8 +78,8 @@ export function LoginDrawer() {
 
         <DrawerMain innerProps={{ className: 'm-auto justify-center' }}>
           <div className="flex flex-col items-center p-4">
-            <h2 className="text-xl font-semibold">
-              <img alt="Book Manager" src="/logo.png" className="h-3xs w-3xs" />
+            <h2 className="size-3xs text-xl font-semibold">
+              <img alt="Book Manager" src="/logo.png" className="size-full" />
             </h2>
           </div>
 

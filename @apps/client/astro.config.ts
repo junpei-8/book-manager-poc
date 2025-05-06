@@ -83,5 +83,14 @@ export default defineConfig({
         ignored: ['**/src-tauri/**'],
       },
     },
+    build: {
+      assetsInlineLimit: 0,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          passes: 2,
+        },
+      },
+    },
   },
 });
