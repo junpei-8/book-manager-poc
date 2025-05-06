@@ -1,6 +1,5 @@
 name = "client"
 compatibility_date = "2025-03-21"
-compatibility_flags = ["nodejs_compat", "nodejs_compat_populate_process_env"]
 
 [assets]
 directory = "./dist"
