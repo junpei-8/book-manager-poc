@@ -1,0 +1,22 @@
+---
+import { cn } from '@libs/shadcn/lib/utils';
+
+const props = Astro.props;
+type Props = astroHTML.JSX.Attributes<'main'>;
+---
+
+<main
+  {...props}
+  id="layout-main"
+  class={cn('pb-24 sm:pb-32 lg:pb-40', props.class)}
+>
+  <slot />
+</main>
+
+<style is:global>
+  #layout-main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+</style>

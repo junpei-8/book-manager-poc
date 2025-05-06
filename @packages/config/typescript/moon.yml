@@ -1,0 +1,9 @@
+id: '@packages-config/typescript'
+type: 'library'
+stack: 'unknown'
+
+project:
+  description: 'TypeScript configuration.'
+
+# NOTE: @packages-codebase/eslint and @packages-codebase/prettier are not listed to avoid circular dependencies.
+dependsOn: []

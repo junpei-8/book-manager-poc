@@ -1,0 +1,104 @@
+---
+import '../../styles/tailwind.css';
+import '../../styles/sonner.css';
+
+import { ClientRouter } from 'astro:transitions';
+import { Toaster } from '@libs/shadcn/components/ui/sonner';
+import envScript from '../_scripts/env.js?raw';
+import popstateBlockerScript from '../_scripts/popstate-blocker.js?raw';
+import themeScript from '../_scripts/theme.js?raw';
+import VibrationCheckbox from '../_fragments/VibrationCheckbox.astro';
+
+type Props = {
+  html?: astroHTML.JSX.Attributes<'html'>;
+  head?: astroHTML.JSX.Attributes<'head'>;
+  body?: astroHTML.JSX.Attributes<'body'> & {
+    root?: astroHTML.JSX.Attributes<'div'>;
+  };
+};
+
+const {
+  html: htmlProps = {},
+  head: headProps = {},
+  body: { root: rootProps = {}, ...bodyProps } = {},
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja" {...htmlProps}>
+  <head {...headProps}>
+    <slot name="head:top" />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"
+    />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <ClientRouter />
+    <script is:raw set:html={envScript} />
+    <script is:raw set:html={themeScript} />
+    <script is:raw set:html={popstateBlockerScript} />
+    <slot name="head:bottom" />
+  </head>
+
+  <body {...bodyProps}>
+    <slot name="body:top" />
+
+    <slot name="body-root:before" />
+    <div
+      id="layout-root"
+      vaul-drawer-wrapper
+      {...rootProps}
+      transition:name={rootProps['transition:name']}
+      transition:persist={rootProps['transition:persist']}
+      transition:animate={rootProps['transition:animate']}
+    >
+      <slot />
+    </div>
+    <slot name="body-root:after" />
+
+    <slot name="body-overlay:before" />
+    <Toaster client:idle richColors />
+    <VibrationCheckbox />
+    <slot name="body-overlay:after" />
+
+    <slot name="body:bottom" />
+  </body>
+</html>
+
+<style is:global>
+  [data-content='app'] {
+    overscroll-behavior-x: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (max-width: 48rem) {
+    [data-context='browser'] {
+      overscroll-behavior-x: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  }
+
+  body {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    background: var(--background);
+  }
+
+  #layout-root {
+    position: relative;
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: var(--background);
+  }
+</style>

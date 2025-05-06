@@ -1,0 +1,45 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  "explorer.sortOrderLexicographicOptions": "unicode",
+
+  "files.associations": {
+    ".prototools": "toml",
+    "*.env{,.example}": "dotenv",
+    "*.vars{,.example}": "dotenv",
+    "*.tw.css": "tailwindcss",
+    "tailwind.css": "tailwindcss"
+  },
+
+  "material-icon-theme.folders.associations": {
+    "@apps": "app",
+    "@libs": "lib",
+    "@packages": "packages"
+  },
+  "material-icon-theme.files.associations": {
+    "*.type.ts": "typescript-def",
+    "*.env": "tune",
+    "*.env.example": "tune",
+    "*.vars": "tune",
+    "*.vars.example": "tune"
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  "cSpell.userWords": []
+}

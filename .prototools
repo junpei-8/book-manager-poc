@@ -1,0 +1,16 @@
+bun = "latest"
+node = "lts"
+pnpm = "latest"
+moon = "latest"
+proto = "latest"
+act = "latest"
+
+[tools.npm]
+shared-globals-dir = true
+
+[plugins]
+act = "https://raw.githubusercontent.com/theomessin/proto-toml-plugins/master/act.toml"
+
+[settings]
+auto-clean = true
+auto-install = true

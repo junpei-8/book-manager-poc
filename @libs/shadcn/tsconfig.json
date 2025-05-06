@@ -1,0 +1,24 @@
+{
+  "extends": "@packages-config/typescript/configs/base.json",
+  "compilerOptions": {
+    "outDir": "../../.moon/cache/types/@libs/shadcn",
+    "jsx": "preserve",
+    "jsxImportSource": "react",
+    "lib": ["ESNext", "DOM"],
+    "paths": {
+      ":": ["./src"],
+      ":/*": ["./src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../../@packages/codebase/eslint"
+    },
+    {
+      "path": "../../@packages/codebase/prettier"
+    },
+    {
+      "path": "../../@packages/config/typescript"
+    }
+  ]
+}

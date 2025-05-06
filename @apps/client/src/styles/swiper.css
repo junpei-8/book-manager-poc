@@ -1,0 +1,22 @@
+.swiper-smooth-initial-slide:not(.swiper-initialized)
+  > .swiper-wrapper
+  > .swiper-slide:not(.swiper-initial-slide) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.swiper-smooth-initial-slide.swiper-smooth-initial-slide-animation.swiper-initialized
+  > .swiper-wrapper
+  > .swiper-slide:not(.swiper-initial-slide) {
+  animation: fadeIn 240ms var(--ease-in-out) both;
+}
+
+:root {
+  --swiper-wrapper-transition-timing-function: var(--ease-in-out);
+}

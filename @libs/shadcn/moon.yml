@@ -1,0 +1,16 @@
+id: "@libs/shadcn"
+type: "library"
+stack: "unknown"
+
+project:
+  description: "The shadcn helpers."
+
+dependsOn:
+  - { id: "@packages-codebase/eslint", scope: "development" }
+  - { id: "@packages-codebase/prettier", scope: "development" }
+  - { id: "@packages-config/typescript", scope: "development" }
+
+tasks:
+  add:
+    description: "Install the shadcn components."
+    command: "pnpm dlx shadcn@latest add"

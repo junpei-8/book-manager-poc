@@ -1,0 +1,15 @@
+---
+import LayoutPseudoMain from '../../_layouts/main/LayoutPseudoMain.astro';
+import RootPageHeader from '../_components/header/RootPageHeader.astro';
+import { RootPageLibraryBookList } from './_fragments/RootPageLibraryBookList.react';
+
+const loaderOptions = {
+  rootMargin: '-4%',
+};
+---
+
+<RootPageHeader title="本棚" />
+
+<LayoutPseudoMain>
+  <RootPageLibraryBookList client:visible={loaderOptions} />
+</LayoutPseudoMain>

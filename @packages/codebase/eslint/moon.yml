@@ -1,0 +1,10 @@
+id: '@packages-codebase/eslint'
+type: 'library'
+stack: 'unknown'
+
+project:
+  description: 'ESLint configuration for codebase.'
+
+dependsOn:
+  # { id: '@packages-codebase/prettier', scope: 'development' } # NOTE: Avoid circular dependencies.
+  - { id: '@packages-config/typescript', scope: 'development' }

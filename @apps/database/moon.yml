@@ -1,0 +1,87 @@
+id: '@apps/database'
+type: 'library'
+stack: 'backend'
+
+project:
+  name: 'Database'
+  description: 'Database'
+
+dependsOn:
+  - { id: '@packages-codebase/eslint', scope: 'development' }
+  - { id: '@packages-codebase/prettier', scope: 'development' }
+  - { id: '@packages-config/typescript', scope: 'development' }
+
+tasks:
+  #######################
+  ## Development setup ##
+  #######################
+
+  dev-directory-setup:
+    command: 'mkdir -p ./.turso'
+    outputs:
+      - './.turso'
+    options:
+      envFile: '.dev.env'
+
+  dev-wait-until-healthy:
+    command: 'bun ./src/developments/healthy/wait.ts'
+    options:
+      envFile: '.dev.env'
+      cache: false
+
+  dev-migration-up:
+    command: 'bun ./src/developments/migration/up.ts'
+    options:
+      envFile: '.dev.env'
+      cache: false
+
+  #################
+  ## Development ##
+  #################
+
+  dev:
+    deps:
+      - 'dev-db'
+      - 'dev-db-studio'
+
+  dev-db:
+    command: 'turso dev --db-file "${DEV_TURSO_DB_FILE}" --port "${DEV_PORT}"'
+    preset: 'server'
+    deps:
+      - 'dev-directory-setup'
+      - 'dev-wait-until-healthy'
+      - 'dev-migration-up'
+    options:
+      envFile: '.dev.env'
+      runDepsInParallel: false
+
+  dev-db-studio:
+    command: 'drizzle-kit studio'
+    preset: 'server'
+    options:
+      envFile: '.dev.env'
+
+  dev-reset:
+    command: 'bunx rimraf "${DEV_TURSO_DB_FILE}*"'
+    options:
+      envFile: '.dev.env'
+
+  ##############
+  ## Database ##
+  ##############
+
+  migration-generate:
+    command: 'drizzle-kit generate'
+    inputs:
+      - 'drizzle.config.ts'
+      - 'tsconfig.json'
+      - 'src/**/*'
+    outputs:
+      - 'src/migrations'
+    options:
+      envFile: '.dev.env'
+
+  migration-up:
+    command: 'drizzle-kit migrate'
+    inputs:
+      - 'src/migrations/**/*'

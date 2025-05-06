@@ -1,0 +1,23 @@
+---
+import LayoutPseudoMain from '../../_layouts/main/LayoutPseudoMain.astro';
+import RootPageHeader from '../_components/header/RootPageHeader.astro';
+import { RootPageHeaderProfileDrawerWithTrigger } from '../_components/header/RootPageHeaderProfileDrawerWithTrigger.react';
+import { RootPageHomeSliderMenu } from './_fragments/slider-menu/RootPageHomeSliderMenu.react';
+// import { RootPageHomeStaticMenu } from './_fragments/static-menu/RootPageHomeStaticMenu.react';
+import { RootPageHomeBookLists } from './_fragments/book-lists/RootPageHomeBookLists.react.tsx';
+
+const loaderOptions = {
+  rootMargin: '-4%',
+};
+---
+
+<RootPageHeader title="ホーム">
+  <RootPageHeaderProfileDrawerWithTrigger client:visible={loaderOptions} />
+</RootPageHeader>
+
+<LayoutPseudoMain>
+  <RootPageHomeSliderMenu client:visible={loaderOptions} />
+  <!-- <RootPageHomeStaticMenu client:visible={loaderOptions} /> -->
+
+  <RootPageHomeBookLists client:visible={loaderOptions} />
+</LayoutPseudoMain>

@@ -1,0 +1,11 @@
+---
+import LayoutPseudoMain from '../../_layouts/main/LayoutPseudoMain.astro';
+import RootPageHeader from '../_components/header/RootPageHeader.astro';
+import { RootPageStatusMaintenanceView } from './_fragments/RootPageStatusMaintenanceView.react';
+---
+
+<RootPageHeader title="ステータス" />
+
+<LayoutPseudoMain>
+  <RootPageStatusMaintenanceView client:idle />
+</LayoutPseudoMain>

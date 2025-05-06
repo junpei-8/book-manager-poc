@@ -1,0 +1,46 @@
+# Environment variables
+.env*
+!.env*.example
+
+# Log files
+logs/
+*.log*
+
+# Build artifacts
+build/
+dist/
+
+# Cache artifacts
+.cache/
+
+# Base
+/_/
+
+# Templates
+!_templates/**
+
+# Moon artifacts
+.moon/cache/
+.moon/docker/
+
+# Node dependencies
+node_modules/
+
+# Astro artifacts
+.astro/
+
+# Tauri artifacts
+.tauri/
+
+# Tauri artifacts
+**/src-tauri/target/
+**/src-tauri/gen/schemas/
+
+# Turso artifacts
+.turso/
+
+# Wrangler artifacts
+.wrangler/
+
+# OS files
+.DS_Store

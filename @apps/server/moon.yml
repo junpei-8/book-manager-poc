@@ -1,0 +1,77 @@
+id: '@apps/server'
+type: 'library'
+stack: 'backend'
+
+project:
+  name: 'Server'
+  description: 'Server'
+
+dependsOn:
+  - { id: '@apps/database' }
+  - { id: '@packages-codebase/eslint', scope: 'development' }
+  - { id: '@packages-codebase/prettier', scope: 'development' }
+  - { id: '@packages-config/typescript', scope: 'development' }
+
+tasks:
+  #################
+  ## Development ##
+  #################
+
+  dev:
+    command: 'vite --port "${DEV_PORT}"'
+    preset: 'server'
+    options:
+      envFile: '.dev.vars'
+
+  ###########
+  ## Build ##
+  ###########
+
+  build:
+    command: 'vite build'
+    inputs:
+      - 'vite.config.ts'
+      - 'wrangler.toml'
+      - 'tsconfig.json'
+      - 'package.json'
+      - 'src/**/*'
+    outputs:
+      - 'dist'
+    options:
+      envFile: '.vars'
+
+  #############
+  ## Preview ##
+  #############
+
+  preview-build:
+    command: 'vite build'
+    inputs:
+      - 'vite.config.ts'
+      - 'wrangler.toml'
+      - 'tsconfig.json'
+      - 'package.json'
+      - 'src/**/*'
+    outputs:
+      - 'dist'
+    options:
+      envFile: '.dev.vars'
+
+  preview:
+    command: 'vite preview --port "${DEV_PORT}"'
+    preset: 'server'
+    deps:
+      - 'preview-build'
+    options:
+      envFile: '.dev.vars'
+
+  ############
+  ## Deploy ##
+  ############
+
+  deploy:
+    command: 'wrangler deploy dist/index.js'
+    inputs:
+      - 'dist'
+    deps:
+      - 'build'

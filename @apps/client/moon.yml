@@ -1,0 +1,123 @@
+id: '@apps/client'
+type: 'application'
+stack: 'frontend'
+
+project:
+  name: 'Client'
+  description: 'Client'
+
+dependsOn:
+  - { id: '@apps/server' }
+  - { id: '@libs/shadcn' }
+  - { id: '@packages-codebase/eslint', scope: 'development' }
+  - { id: '@packages-codebase/prettier', scope: 'development' }
+  - { id: '@packages-config/typescript', scope: 'development' }
+
+fileGroups:
+  sources:
+    - 'astro.config.ts'
+    - 'tsconfig.json'
+    - 'package.json'
+    - 'public/**/*'
+    - 'src/**/*'
+    - 'src-tauri/**/*'
+
+tasks:
+  #################
+  ## Development ##
+  #################
+
+  dev:
+    preset: 'server'
+    command: 'astro dev --port "${DEV_PORT}"'
+    options:
+      envFile: '.dev.env'
+
+  dev-native:
+    preset: 'server'
+    command: 'tauri dev --port "${DEV_PORT}" --config ${TAURI_DEV_CONFIG}'
+    deps:
+      - 'dev'
+    env:
+      TAURI_DEV_CONFIG: '{\"build\":{\"devUrl\":\"http://localhost:${DEV_PORT}\"}}'
+    options:
+      envFile: '.dev.env'
+
+  ##########
+  ## Sync ##
+  ##########
+
+  sync:
+    command: 'astro sync'
+    outputs:
+      - '.astro'
+    options:
+      runInCI: true
+
+  ###########
+  ## Build ##
+  ###########
+
+  build:
+    command: 'astro build'
+    inputs:
+      - '@group(sources)'
+    outputs:
+      - 'dist'
+    options:
+      envFile: '.env'
+
+  build-native:
+    command: 'tauri build'
+    inputs:
+      - '@group(sources)'
+    outputs:
+      - 'dist'
+    options:
+      envFile: '.env'
+
+  #############
+  ## Preview ##
+  #############
+
+  preview-build:
+    command: 'astro build'
+    inputs:
+      - '@group(sources)'
+    outputs:
+      - 'dist'
+    options:
+      envFile: '.dev.env'
+
+  preview:
+    command: 'astro preview --port "${DEV_PORT}"'
+    preset: 'server'
+    deps:
+      - 'preview-build'
+    options:
+      envFile: '.dev.env'
+
+  ###########
+  ## Check ##
+  ###########
+
+  check-prettier:
+    deps:
+      - 'sync'
+  check-eslint:
+    deps:
+      - 'sync'
+  check-types:
+    deps:
+      - 'sync'
+
+  ############
+  ## Format ##
+  ############
+
+  format-prettier:
+    deps:
+      - 'sync'
+  format-eslint:
+    deps:
+      - 'sync'

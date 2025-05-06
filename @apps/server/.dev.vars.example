@@ -1,0 +1,19 @@
+#############
+## 環境設定 ##
+#############
+
+DEV_PORT="2400"
+
+###################
+## データベース接続 ##
+###################
+
+PRIVATE_DATABASE_URL="http://localhost:1600"
+PRIVATE_DATABASE_AUTH_TOKEN="turso-auth-token"
+
+##################
+## Google OAuth ##
+##################
+
+PRIVATE_GOOGLE_CLIENT_ID=""
+PRIVATE_GOOGLE_CLIENT_SECRET=""

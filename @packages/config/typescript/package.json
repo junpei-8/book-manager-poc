@@ -1,0 +1,15 @@
+{
+  "name": "@packages-config/typescript",
+  "private": true,
+  "type": "module",
+  "sideEffect": false,
+  "exports": {
+    ".": "./src/index.d.ts",
+    "./*": "./src/*"
+  },
+  "dependencies": {
+    "@total-typescript/ts-reset": "^0.6.1",
+    "type-fest": "^4.39.1",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "recommendations": [
+    "PKief.material-icon-theme",
+    "astro-build.astro-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "moonrepo.moon-console",
+    "streetsidesoftware.code-spell-checker",
+    "stylelint.vscode-stylelint"
+  ],
+  "requiredRecommendations": [
+    "astro-build.astro-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "moonrepo.moon-console",
+    "streetsidesoftware.code-spell-checker",
+    "stylelint.vscode-stylelint"
+  ],
+  "unwantedRecommendations": []
+}

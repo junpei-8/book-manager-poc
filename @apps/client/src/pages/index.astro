@@ -1,0 +1,42 @@
+---
+import Layout from './_layouts/Layout.astro';
+import { LoginDrawer } from './_components/LoginDrawer.react';
+import { PageSlider } from './_components/PageSlider.react';
+import { HomeIcon, ActivityIcon, LibraryIcon } from '@lucide/astro';
+
+// Home is loaded with idle
+import RootPageHome from './_pages/home/RootPageHome.idle.astro';
+
+// Library and Status is loaded with visible
+import RootPageLibrary from './_pages/library/RootPageLibrary.visible.astro';
+import RootPageStatus from './_pages/status/RootPageStatus.visible.astro';
+---
+
+<Layout>
+  <PageSlider
+    client:idle
+    options={{ initialSlide: 1 }}
+    slideProps={{
+      'slide:0': {
+        link: '/library',
+      },
+      'slide:1': {
+        link: '/',
+      },
+      'slide:2': {
+        link: '/status',
+      },
+    }}
+  >
+    <RootPageLibrary slot="slide:0" />
+    <LibraryIcon slot="slide-icon:0" />
+
+    <RootPageHome slot="slide:1" />
+    <HomeIcon slot="slide-icon:1" />
+
+    <RootPageStatus slot="slide:2" />
+    <ActivityIcon slot="slide-icon:2" />
+  </PageSlider>
+
+  <LoginDrawer client:idle />
+</Layout>

@@ -1,0 +1,23 @@
+{
+  "extends": "@packages-config/typescript/configs/astro.json",
+  "compilerOptions": {
+    "outDir": "../../.moon/cache/types/@apps/client"
+  },
+  "references": [
+    {
+      "path": "../../@libs/shadcn"
+    },
+    {
+      "path": "../../@packages/codebase/eslint"
+    },
+    {
+      "path": "../../@packages/codebase/prettier"
+    },
+    {
+      "path": "../../@packages/config/typescript"
+    },
+    {
+      "path": "../server"
+    }
+  ]
+}

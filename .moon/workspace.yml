@@ -1,0 +1,16 @@
+# Documents: https://moonrepo.dev/docs/config/workspace
+
+projects:
+  sources:
+    root: '.'
+  globs:
+    - '@*/**/moon.yml'
+
+pipeline:
+  installDependencies: ['node']
+
+codeowners:
+  syncOnRun: true
+
+vcs:
+  defaultBranch: 'main'

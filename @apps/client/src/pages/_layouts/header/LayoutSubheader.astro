@@ -1,0 +1,23 @@
+---
+import { cn } from '@libs/shadcn/lib/utils';
+import { LayoutSubheaderXButton } from './LayoutSubheaderXButton.react';
+
+const { title, class: className, ...props } = Astro.props;
+type Props = astroHTML.JSX.Attributes<'header'> & {
+  title: string;
+};
+---
+
+<header
+  {...props}
+  class={cn(
+    'fixed left-0 right-0 top-0 z-10 flex items-center justify-center wrapper py-4 backdrop-blur-2xl',
+    className,
+  )}
+>
+  <a href="/" class="absolute left-4">
+    <img src="/logo.png" alt="logo" class="size-8" />
+  </a>
+  <h1 class="text-sm font-bold">{title}</h1>
+  <LayoutSubheaderXButton client:idle />
+</header>

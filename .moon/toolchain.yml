@@ -1,0 +1,12 @@
+# Documents: https://moonrepo.dev/docs/config/toolchain
+
+node:
+  packageManager: pnpm
+  addEnginesConstraint: false
+  dependencyVersionFormat: workspace
+  syncProjectWorkspaceDependencies: true
+
+typescript:
+  routeOutDirToCache: true
+  syncProjectReferences: true
+  syncProjectReferencesToPaths: false
