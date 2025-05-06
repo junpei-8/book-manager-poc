@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nowTimestampMsSql } from './core/date';
-import { uuidSql } from './core/uuid';
+import { publicIdSql } from './core/id';
 import { userAccountsTable } from './user-accounts';
 import { userSessionsTable } from './user-sessions';
 
@@ -22,7 +22,7 @@ export const usersTable = sqliteTable(usersTableName, {
   /**
    * 公開ID。
    */
-  publicId: text('public_id').notNull().unique().default(uuidSql),
+  publicId: text('public_id').notNull().unique().default(publicIdSql),
 
   /**
    * 名前。

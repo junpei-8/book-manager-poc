@@ -1,6 +1,6 @@
 CREATE TABLE `user_accounts` (
 	`id` integer PRIMARY KEY NOT NULL,
-	`public_id` text DEFAULT (upper(replace(uuid(), '-', ''))) NOT NULL,
+	`public_id` text DEFAULT (upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12))) NOT NULL,
 	`user_id` text NOT NULL,
 	`account_id` text NOT NULL,
 	`provider_id` text NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `user_accounts` (
 CREATE UNIQUE INDEX `user_accounts_public_id_unique` ON `user_accounts` (`public_id`);--> statement-breakpoint
 CREATE TABLE `user_sessions` (
 	`id` integer PRIMARY KEY NOT NULL,
-	`public_id` text DEFAULT (upper(replace(uuid(), '-', ''))) NOT NULL,
+	`public_id` text DEFAULT (upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12))) NOT NULL,
 	`user_id` text NOT NULL,
 	`token` text NOT NULL,
 	`expires_at` integer NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `user_sessions` (
 CREATE UNIQUE INDEX `user_sessions_public_id_unique` ON `user_sessions` (`public_id`);--> statement-breakpoint
 CREATE TABLE `user_verifications` (
 	`id` integer PRIMARY KEY NOT NULL,
-	`public_id` text DEFAULT (upper(replace(uuid(), '-', ''))) NOT NULL,
+	`public_id` text DEFAULT (upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12))) NOT NULL,
 	`identifier` text NOT NULL,
 	`value` text NOT NULL,
 	`expires_at` integer NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `user_verifications` (
 CREATE UNIQUE INDEX `user_verifications_public_id_unique` ON `user_verifications` (`public_id`);--> statement-breakpoint
 CREATE TABLE `users` (
 	`id` integer PRIMARY KEY NOT NULL,
-	`public_id` text DEFAULT (upper(replace(uuid(), '-', ''))) NOT NULL,
+	`public_id` text DEFAULT (upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12))) NOT NULL,
 	`name` text NOT NULL,
 	`email` text NOT NULL,
 	`email_verified` integer DEFAULT false NOT NULL,

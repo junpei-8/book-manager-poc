@@ -1,6 +1,6 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nowTimestampMsSql } from './core/date';
-import { uuidSql } from './core/uuid';
+import { publicIdSql } from './core/id';
 
 /**
  * User Verifications テーブルの名前。
@@ -19,7 +19,7 @@ export const userVerificationsTable = sqliteTable(userVerificationsTableName, {
   /**
    * ID。
    */
-  publicId: text('public_id').notNull().unique().default(uuidSql),
+  publicId: text('public_id').notNull().unique().default(publicIdSql),
 
   /**
    * 識別子。

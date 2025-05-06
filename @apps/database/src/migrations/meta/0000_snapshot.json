@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "43115678-4dcc-412f-9d1b-9ac839648533",
+  "id": "4946bf03-9442-4e98-9590-fd15ac6f83f0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "user_accounts": {
@@ -20,7 +20,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(upper(replace(uuid(), '-', '')))"
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
         },
         "user_id": {
           "name": "user_id",
@@ -112,7 +112,9 @@
       "indexes": {
         "user_accounts_public_id_unique": {
           "name": "user_accounts_public_id_unique",
-          "columns": ["public_id"],
+          "columns": [
+            "public_id"
+          ],
           "isUnique": true
         }
       },
@@ -121,8 +123,12 @@
           "name": "user_accounts_user_id_users_id_fk",
           "tableFrom": "user_accounts",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -147,7 +153,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(upper(replace(uuid(), '-', '')))"
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
         },
         "user_id": {
           "name": "user_id",
@@ -204,7 +210,9 @@
       "indexes": {
         "user_sessions_public_id_unique": {
           "name": "user_sessions_public_id_unique",
-          "columns": ["public_id"],
+          "columns": [
+            "public_id"
+          ],
           "isUnique": true
         }
       },
@@ -213,8 +221,12 @@
           "name": "user_sessions_user_id_users_id_fk",
           "tableFrom": "user_sessions",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -239,7 +251,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(upper(replace(uuid(), '-', '')))"
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
         },
         "identifier": {
           "name": "identifier",
@@ -282,7 +294,9 @@
       "indexes": {
         "user_verifications_public_id_unique": {
           "name": "user_verifications_public_id_unique",
-          "columns": ["public_id"],
+          "columns": [
+            "public_id"
+          ],
           "isUnique": true
         }
       },
@@ -307,7 +321,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(upper(replace(uuid(), '-', '')))"
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
         },
         "name": {
           "name": "name",
@@ -358,7 +372,9 @@
       "indexes": {
         "users_public_id_unique": {
           "name": "users_public_id_unique",
-          "columns": ["public_id"],
+          "columns": [
+            "public_id"
+          ],
           "isUnique": true
         }
       },

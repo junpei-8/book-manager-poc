@@ -79,6 +79,7 @@ tasks:
     outputs:
       - 'src/migrations'
     options:
+      cache: false
       envFile: '.dev.env'
 
   migration-up:
@@ -86,4 +87,5 @@ tasks:
     inputs:
       - 'src/migrations/**/*'
     options:
+      cache: false
       envFile: '.env'
