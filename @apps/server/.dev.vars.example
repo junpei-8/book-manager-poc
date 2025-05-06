@@ -2,11 +2,20 @@
 ## 環境設定 ##
 #############
 
+ENV="development"
 DEV_PORT="2400"
 
-###################
-## データベース接続 ##
-###################
+#####################
+## 認証サーバーの設定 ##
+#####################
+
+PRIVATE_AUTH_API_BASE_URL="http://localhost:2400"
+PRIVATE_AUTH_API_SECRET_KEY="" # https://www.better-auth.com/docs/installation#set-environment-variables
+PRIVATE_AUTH_API_ACCESS_ORIGIN="http://localhost:3200,http://127.0.0.1:3200"
+
+################
+## データベース ##
+################
 
 PRIVATE_DATABASE_URL="http://localhost:1600"
 PRIVATE_DATABASE_AUTH_TOKEN="turso-auth-token"
@@ -15,5 +24,5 @@ PRIVATE_DATABASE_AUTH_TOKEN="turso-auth-token"
 ## Google OAuth ##
 ##################
 
-PRIVATE_GOOGLE_CLIENT_ID=""
-PRIVATE_GOOGLE_CLIENT_SECRET=""
+PRIVATE_GOOGLE_OAUTH_CLIENT_ID=""
+PRIVATE_GOOGLE_OAUTH_CLIENT_SECRET=""

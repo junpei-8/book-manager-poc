@@ -1,6 +1,10 @@
 # Environment variables
-.env*
-!.env*.example
+*.env*
+!*.env*.example
+
+# Variables
+*.vars*
+!*.vars*.example
 
 # Log files
 logs/

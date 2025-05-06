@@ -85,3 +85,5 @@ tasks:
     command: 'drizzle-kit migrate'
     inputs:
       - 'src/migrations/**/*'
+    options:
+      envFile: '.env'
