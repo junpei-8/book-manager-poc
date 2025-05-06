@@ -1,3 +1,6 @@
 name = "server"
 main = "src/index.ts"
 compatibility_date = "2025-03-21"
+
+[observability]
+enabled = true
