@@ -33,7 +33,9 @@ export async function searchNDL<Version extends SearchNDLVersion = '2.0'>(
 
   const NDL_API_ENDPOINT = 'https://iss.ndl.go.jp/api/opensearch';
   const url = `${NDL_API_ENDPOINT}?${query.toString()}`;
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: { Accept: 'application/atom+xml' },
+  });
   if (!response.ok) {
     throw new Error(`Request failed: ${response.status}`);
   }
