@@ -126,7 +126,7 @@ const BookCard = memo(
     return (
       <a href={href} onClick={(event) => onClickCard(index, swiperRef, event)}>
         <BentoCardWithoutLink
-          className="h-full w-full"
+          className="force-border-none h-full w-full"
           Icon={BookIcon}
           name="本を追加する"
           description="あなたの読書の軌跡を残しましょう。"

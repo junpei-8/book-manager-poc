@@ -34,7 +34,7 @@ export function HapticButton({
   className,
   variant,
   scalable,
-  vibration,
+  vibration = 'short',
   onClick,
   ...props
 }: Omit<React.ComponentProps<typeof Button>, 'variant'> & {
