@@ -256,7 +256,8 @@ function initializeSwiper(
         options.on?.slideChange?.(swiper);
       },
       activeIndexChange: (swiper) => {
-        // if (hasChangedActiveIndex && vibration) vibrate(vibration);
+        if (hasChangedActiveIndex && vibration)
+          vibrate(vibration, { polyfillBrowser: false });
         activeIndexChangesRef.current?.(swiper.activeIndex);
         hasChangedActiveIndex = true;
       },

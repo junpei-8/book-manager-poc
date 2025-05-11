@@ -109,7 +109,11 @@ const SearchDrawerMain = memo(() => {
 
   return (
     <DrawerMain
-      smoothResizer={mode === 'keyword' || mode === 'isbn'}
+      smoothResizer={
+        mode === 'keyword' || mode === 'isbn'
+          ? { calcHeight: (rect) => Math.min(rect.height, window.innerHeight) }
+          : false
+      }
       outerProps={{
         className: cn(mode === 'barcode' ? 'flex flex-col' : null),
       }}
@@ -244,7 +248,7 @@ async function onScanSearchBarcode(props: {
 
     bookScreenNewSearchStore.isOpenDrawer.set(false);
     bookScreenNewSearchStore.isConfirmed.set(true);
-    bookScreenStore.setDataFromNDLSearchItem(item);
+    bookScreenStore.dataset.setDataFromNDLSearchItem(item);
 
     // ↓ エラーが発生した場合はトーストを表示する
   } catch {
@@ -330,11 +334,11 @@ const SearchResultListItem = memo(
     if (!item) return null;
     return (
       <div
-        className="group relative flex flex-nowrap gap-4 rounded-xl border bg-card p-4 py-6 text-card-foreground shadow-sm transition-all active:scale-95"
+        className="group relative flex flex-nowrap gap-4 overflow-hidden rounded-xl border bg-card p-4 py-6 text-card-foreground shadow-sm transition-all active:scale-95"
         onClick={() => {
           bookScreenNewSearchStore.isOpenDrawer.set(false);
           bookScreenNewSearchStore.isConfirmed.set(true);
-          bookScreenStore.setDataFromNDLSearchItem(item);
+          bookScreenStore.dataset.setDataFromNDLSearchItem(item);
         }}
       >
         <div className="my-auto w-[24%] flex-shrink-0">
@@ -364,7 +368,7 @@ const SearchResultListItem = memo(
             </div>
           ) : null}
         </div>
-        <div className="pointer-events-none absolute inset-0 z-10 fade-transition group-hover:bg-primary/24 group-active:bg-primary/24"></div>
+        <div className="pointer-events-none absolute inset-0 z-10 transition-all duration-[240ms] ease-in-out group-hover:bg-primary/24 group-active:bg-primary/24"></div>
       </div>
     );
   },

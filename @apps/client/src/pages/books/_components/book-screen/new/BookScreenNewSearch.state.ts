@@ -131,6 +131,12 @@ export const bookScreenNewSearchStore = {
       }
     },
   },
+
+  reset() {
+    this.isConfirmed.set(false);
+    this.isOpenDrawer.set(false);
+    this.list.reset();
+  },
 };
 
 /**

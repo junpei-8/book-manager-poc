@@ -44,15 +44,26 @@ export function convertVibrateTokenToNumber(token: VibrationToken) {
 }
 
 /**
+ * バイブレーションのオプション。
+ */
+export type VibrateOptions = {
+  /**
+   * ブラウザの Vibration API がサポートされていない場合は Checkbox を用いたバイブレーションを実行する。
+   */
+  polyfillBrowser?: boolean;
+};
+
+/**
  * バイブレーションを実行する。
  *
  * @param pattern バイブレーションのパターン
  */
 export function vibrate(
   pattern: VibratePattern | VibrationToken | VibrationToken[] = ['short'],
+  options?: VibrateOptions,
 ) {
   if (!isClient) return;
-  executeVibration(toArray(pattern).map(convertVibrateTokenToNumber));
+  executeVibration(toArray(pattern).map(convertVibrateTokenToNumber), options);
 }
 
 /**
@@ -62,7 +73,7 @@ export function vibrate(
  *
  * @returns          バイブレーションの実行結果
  */
-export function executeVibration(patterns: number[]) {
+export function executeVibration(patterns: number[], options?: VibrateOptions) {
   if (!isClient) return false;
 
   switch (env.context) {
@@ -71,7 +82,7 @@ export function executeVibration(patterns: number[]) {
       // ブラウザの場合は navigator.vibrate を使用
       return isSupportedBrowserVibration
         ? window.navigator.vibrate(patterns)
-        : executeVibrationWithCheckbox();
+        : options?.polyfillBrowser !== false && executeVibrationWithCheckbox();
 
     default:
       return false;

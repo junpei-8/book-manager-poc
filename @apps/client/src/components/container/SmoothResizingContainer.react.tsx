@@ -12,6 +12,8 @@ export interface SmoothResizingContainerProps {
   outerProps?: React.JSX.IntrinsicElements['div'];
   innerProps?: React.JSX.IntrinsicElements['div'];
   children?: React.ReactNode;
+  calcHeight?: (rect: DOMRect) => number;
+  calcWidth?: (rect: DOMRect) => number;
 }
 
 /**
@@ -23,6 +25,8 @@ export function SmoothResizingContainer({
   outerProps = {},
   innerProps = {},
   children,
+  calcHeight,
+  calcWidth,
 }: SmoothResizingContainerProps) {
   const outerElRef = useRef<HTMLDivElement>(null);
   const innerElRef = useRef<HTMLDivElement>(null);
@@ -37,6 +41,8 @@ export function SmoothResizingContainer({
         disabled,
         isHorizontal,
         isVertical,
+        calcHeight,
+        calcWidth,
       ),
     [disabled, isHorizontal, isVertical],
   );
@@ -80,6 +86,8 @@ function observeResizeObserver(
   disabled: boolean,
   isHorizontal: boolean,
   isVertical: boolean,
+  calcHeight: (rect: DOMRect) => number = (rect) => rect.height,
+  calcWidth: (rect: DOMRect) => number = (rect) => rect.width,
 ) {
   if (disabled) return;
 
@@ -101,8 +109,8 @@ function observeResizeObserver(
 
       queuing(() => {
         const rect = innerEl.getBoundingClientRect();
-        if (isVertical) outerEl.style.height = `${rect.height}px`; // 垂直の場合は縦を可変
-        if (isHorizontal) outerEl.style.width = `${rect.width}px`; // 水平の場合は横を可変
+        if (isVertical) outerEl.style.height = `${calcHeight(rect)}px`; // 垂直の場合は縦を可変
+        if (isHorizontal) outerEl.style.width = `${calcWidth(rect)}px`; // 水平の場合は横を可変
       });
     }),
   );

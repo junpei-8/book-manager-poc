@@ -1,14 +1,14 @@
 ---
 import { cn } from '@libs/shadcn/lib/utils';
 
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
 type Props = astroHTML.JSX.Attributes<'main'>;
 ---
 
 <main
   {...props}
   id="layout-main"
-  class={cn('pb-24 sm:pb-32 lg:pb-40', props.class)}
+  class={cn('pb-24 sm:pb-32 lg:pb-40', className)}
 >
   <slot />
 </main>

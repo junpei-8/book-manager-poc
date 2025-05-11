@@ -7,6 +7,7 @@ import {
   bookScreenNewSearchComputedStore,
   bookScreenNewSearchStore,
 } from './BookScreenNewSearch.state';
+import { navigate } from 'astro:transitions/client';
 
 /**
  * @jsx
@@ -42,6 +43,7 @@ export function BookScreenNewEntryAction() {
         className="grow rounded-full shadow-2xl"
         onClick={() => {
           if (!isSelectedData) return;
+          navigate(`/books/~id?id=${'123'}`);
           // bookScreenStore.dataset.data.set(null); // new book
         }}
       >

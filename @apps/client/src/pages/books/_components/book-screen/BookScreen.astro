@@ -1,8 +1,11 @@
 ---
-import { BookScreenNewContentDetails } from './new/BookScreenNewContentDetails.react';
-import { BookScreenNewContentThumbnail } from './new/BookScreenNewContentThumbnail.react';
+import { BookScreenContentThumbnail } from './common/BookScreenContentThumbnail.react';
+import { BookScreenContentDetails } from './common/BookScreenContentDetails.react';
 import { BookScreenNewEntryAction } from './new/BookScreenNewEntryAction.react';
 import { BookScreenNewSearchDrawer } from './new/BookScreenNewSearchDrawer.react';
+import { BookScreenNewSearchStateResetter } from './new/BookScreenNewSearchStateResetter.react';
+import { cn } from '@libs/shadcn/lib/utils';
+import { BookScreenViewIntersectionRatioObserver } from './view/BookScreenViewIntersectionRatioObserver.react';
 
 const props = Astro.props;
 type Props = {
@@ -10,69 +13,44 @@ type Props = {
 };
 ---
 
-<div class="book-viewer wrapper" data-mode={props.mode}>
+<div
+  class={cn(
+    'relative max-w-md mx-auto size-full',
+    props.mode === 'new'
+      ? 'grow flex flex-col items-center justify-center pt-16 pb-12 gap-4 md:gap-8'
+      : null,
+    props.mode === 'view'
+      ? 'flex flex-col items-center justify-center gap-2 py-4 md:flex-row md:items-start md:justify-start md:max-w-full'
+      : null,
+  )}
+  data-mode={props.mode}
+>
+  <BookScreenContentThumbnail
+    mode={props.mode}
+    client:idle
+    transition:persist="book-screen-content-thumbnail"
+  />
+  <BookScreenContentDetails
+    mode={props.mode}
+    client:idle
+    transition:persist="book-screen-content-details"
+  />
+
   {
     props.mode === 'new' ? (
       <>
-        <BookScreenNewContentThumbnail client:idle />
-        <BookScreenNewContentDetails client:idle />
         <BookScreenNewSearchDrawer client:idle />
         <BookScreenNewEntryAction client:idle />
+        <BookScreenNewSearchStateResetter client:load />
       </>
     ) : null
   }
 
-  {props.mode === 'view' ? <></> : null}
-
-  <!-- {props.mode === 'new' ? <a href="/books/~id">詳細を見る</a> : null}
-  {props.mode === 'view' ? <a href="/books/new">新規作成</a> : null} -->
+  {
+    props.mode === 'view' ? (
+      <>
+        <BookScreenViewIntersectionRatioObserver client:idle />
+      </>
+    ) : null
+  }
 </div>
-
-<style is:global>
-  /* ::view-transition-old(book-viewer),
-  ::view-transition-new(book-viewer) {
-    width: 100%;
-    height: 100%;
-  } */
-</style>
-
-<style>
-  .book-viewer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    view-transition-name: book-viewer;
-    flex-grow: 1;
-    padding: 1rem;
-  }
-  /* @media (max-width: 48rem) {
-    .book-viewer {
-      flex-grow: 0;
-    }
-  } */
-
-  .book-viewer[data-mode='new'] {
-    max-width: 32rem;
-    gap: 1rem;
-    padding-top: 4.25rem;
-    padding-bottom: 3rem;
-  }
-  @media (min-width: 40rem) {
-    .book-viewer[data-mode='new'] {
-      gap: 2rem;
-    }
-  }
-
-  .book-viewer[data-mode='view'] {
-    width: auto;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  @media (max-width: 48rem) {
-    .book-viewer[data-mode='view'] {
-      border-bottom-left-radius: 10%;
-      border-bottom-right-radius: 10%;
-    }
-  }
-</style>

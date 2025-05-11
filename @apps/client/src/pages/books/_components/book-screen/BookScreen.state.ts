@@ -7,10 +7,6 @@ import type { NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-bo
 export const bookScreenStore = {
   mode: atom<'new' | 'view'>('new'),
 
-  // ###########
-  // ## State ##
-  // ###########
-
   dataset: {
     data: atom<
       | (NDLBooksItem & {
@@ -24,16 +20,27 @@ export const bookScreenStore = {
     hasFetched: atom(false),
     isLoading: atom(false),
     hasLoaded: atom(false),
+
+    setDataFromNDLSearchItem(ndlBooksItem: NDLBooksItem) {
+      this.data.set({
+        providerType: 'ndl_open_search',
+        ...ndlBooksItem,
+      });
+    },
   },
 
-  // ############
-  // ## Action ##
-  // ############
+  /**
+   * コンテンツの表示領域の割合 (0-1)
+   */
+  contentIntersectionRatio: atom(0),
 
-  setDataFromNDLSearchItem(ndlBooksItem: NDLBooksItem) {
-    this.dataset.data.set({
-      providerType: 'ndl_open_search',
-      ...ndlBooksItem,
-    });
+  reset() {
+    this.dataset.data.set(null);
+    this.dataset.error.set(null);
+    this.dataset.isFetching.set(false);
+    this.dataset.hasFetched.set(false);
+    this.dataset.isLoading.set(false);
+    this.dataset.hasLoaded.set(false);
+    this.contentIntersectionRatio.set(0);
   },
 };

@@ -9,7 +9,7 @@ export function LayoutSubheaderXButton() {
     <HapticButton
       variant="ghost"
       size="icon"
-      className="absolute right-3 rounded-full"
+      className="-mr-1.5 rounded-full"
       onClick={() => window.history.back()}
     >
       <XIcon className="size-4" />

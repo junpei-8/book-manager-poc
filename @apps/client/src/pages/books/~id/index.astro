@@ -3,24 +3,15 @@ import { LoginDrawer } from '../../_components/LoginDrawer.react';
 import Layout from '../../_layouts/Layout.astro';
 import LayoutMain from '../../_layouts/main/LayoutMain.astro';
 import BookScreen from '../_components/book-screen/BookScreen.astro';
+import { BooksDetailsSubheader } from './_fragments/BooksDetailsSubheader.react';
 ---
 
 <Layout>
-  <LayoutMain class="main">
+  <BooksDetailsSubheader client:idle />
+
+  <LayoutMain class="wrapper md:pt-16">
     <BookScreen mode="view" />
   </LayoutMain>
 
   <LoginDrawer client:idle />
 </Layout>
-
-<style scoped>
-  .main {
-    flex-direction: row !important;
-    background-color: pink !important;
-  }
-
-  @media (min-width: 768px) {
-    .main {
-    }
-  }
-</style>

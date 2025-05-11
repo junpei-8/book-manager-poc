@@ -1,17 +1,25 @@
 /** @jsxImportSource react */
 
 import { cn } from '@libs/shadcn/lib/utils';
-import { SmoothResizingContainer } from '../container/SmoothResizingContainer.react';
+import {
+  SmoothResizingContainer,
+  type SmoothResizingContainerProps,
+} from '../container/SmoothResizingContainer.react';
 
 /**
  * @jsx
  */
-export interface DrawerMainProps {
-  smoothResizer?: boolean;
+export type DrawerMainProps = {
+  smoothResizer?:
+    | boolean
+    | Omit<
+        SmoothResizingContainerProps,
+        'direction' | 'disabled' | 'outerProps' | 'innerProps' | 'children'
+      >;
   outerProps?: React.JSX.IntrinsicElements['div'];
   innerProps?: React.JSX.IntrinsicElements['div'];
   children?: React.ReactNode;
-}
+};
 
 /**
  * @jsx
@@ -26,12 +34,13 @@ export function DrawerMain({
 }: DrawerMainProps) {
   return (
     <SmoothResizingContainer
+      {...(typeof smoothResizer === 'object' ? smoothResizer : void 0)}
       direction="vertical"
       disabled={!smoothResizer}
       outerProps={{
         ...outerProps,
         className: cn(
-          'scrollbar-hidden duration-[480ms]',
+          'scrollbar-hidden duration-[320ms]',
           outerProps.className,
         ),
       }}
