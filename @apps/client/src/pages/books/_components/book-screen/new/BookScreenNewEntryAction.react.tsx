@@ -43,7 +43,7 @@ export function BookScreenNewEntryAction() {
         className="grow rounded-full shadow-2xl"
         onClick={() => {
           if (!isSelectedData) return;
-          navigate(`/books/~id?id=${'123'}`);
+          navigate(`/books/~id?id=${'123'}`, { history: 'replace' });
           // bookScreenStore.dataset.data.set(null); // new book
         }}
       >

@@ -30,7 +30,9 @@ export function LayoutSubheader({
           h1Props.className,
         )}
       >
-        <span className="wrapper">{title || 'Untitled'}</span>
+        <span className="wrapper overflow-hidden px-16 text-ellipsis whitespace-nowrap">
+          {title || 'Untitled'}
+        </span>
       </h1>
 
       <div

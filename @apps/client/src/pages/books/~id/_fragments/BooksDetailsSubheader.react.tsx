@@ -18,7 +18,7 @@ export function BooksDetailsSubheader() {
       title={data?.title || ''}
       h1Props={{
         className: 'opacity-0',
-        style: hasHydrated ? { opacity: 1 - intersectionRatio } : undefined,
+        style: hasHydrated ? { opacity: intersectionRatio } : undefined,
       }}
     />
   );

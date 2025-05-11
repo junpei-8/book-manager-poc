@@ -12,12 +12,15 @@ export function BookScreenViewIntersectionRatioObserver() {
 
   useLayoutEffect(() => {
     if (!elementRef.current || !hasHydrated) return;
+    bookScreenStore.contentIntersectionRatio.set(0);
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (!entry) return;
-        bookScreenStore.contentIntersectionRatio.set(entry.intersectionRatio);
+        bookScreenStore.contentIntersectionRatio.set(
+          1 - entry.intersectionRatio,
+        );
       },
       { threshold: Array.from({ length: 61 }, (_, i) => i / 60) },
     );

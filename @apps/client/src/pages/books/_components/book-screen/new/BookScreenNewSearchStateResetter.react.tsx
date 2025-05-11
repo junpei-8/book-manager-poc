@@ -6,10 +6,9 @@ import { bookScreenStore } from '../BookScreen.state';
  * @jsx
  */
 export function BookScreenNewSearchStateResetter() {
-  // useLayoutEffect(() => {
-  //   bookScreenStore.reset();
-  //   bookScreenNewSearchStore.reset();
-  // }, []);
+  useLayoutEffect(() => {
+    bookScreenNewSearchStore.reset();
+  }, []);
 
   return null;
 }

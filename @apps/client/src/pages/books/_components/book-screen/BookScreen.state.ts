@@ -30,7 +30,7 @@ export const bookScreenStore = {
   },
 
   /**
-   * コンテンツの表示領域の割合 (0-1)
+   * コンテンツの非表示領域の割合 (0-1)
    */
   contentIntersectionRatio: atom(0),
 
