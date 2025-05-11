@@ -39,7 +39,7 @@ export function BookScreenNewSearchDrawer() {
   return (
     <Drawer
       open={isOpen}
-      // shouldScaleBackground
+      shouldScaleBackground
       repositionInputs={false}
       onOpenChange={bookScreenNewSearchStore.isOpenDrawer.set}
       onAnimationEnd={(open) => {
@@ -350,11 +350,11 @@ const SearchResultListItem = memo(
           />
         </div>
         <div className="flex flex-1 flex-col">
-          <h3 className="mb-1 line-clamp-2 font-bold md:text-lg">
+          <h3 className="mb-1.5 line-clamp-2 font-bold md:text-lg">
             {item.title}
           </h3>
           {item.authors ? (
-            <div className="mb-1 text-xs text-gray-600 md:mb-2 md:text-sm">
+            <div className="mb-4 text-xs text-muted-foreground md:text-sm">
               {item.authors}
             </div>
           ) : null}

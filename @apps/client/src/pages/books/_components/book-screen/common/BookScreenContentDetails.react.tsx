@@ -100,9 +100,9 @@ const BookScreenContentDetailsView = memo((props: { className?: string }) => {
     >
       {data ? (
         <div className="mx-auto flex size-full flex-col p-4">
-          <h3 className="mb-1 font-bold md:text-lg">{data.title}</h3>
+          <h3 className="mb-1.5 font-bold md:text-lg">{data.title}</h3>
           {data.authors ? (
-            <div className="mb-1 text-xs text-gray-600 md:mb-2 md:text-sm">
+            <div className="mb-4 text-xs text-muted-foreground md:text-sm">
               {data.authors}
             </div>
           ) : null}
