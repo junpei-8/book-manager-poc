@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 
 import { cn } from '@libs/shadcn/lib/utils';
-import { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { SkeletonOverlay } from '../skeleton/SkeletonOverlay.react';
 
 /**
@@ -13,16 +13,20 @@ export function Book({
   link,
   image,
   scalable,
+  skeleton,
   fallback,
   children,
+  containerProps: rawContainerProps,
 }: {
   className?: string;
   name?: string | null;
   link?: string | null;
   image?: string | null;
   scalable?: boolean;
+  skeleton?: boolean;
   fallback?: React.ReactNode | boolean;
   children?: React.ReactNode;
+  containerProps?: React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement>;
 }) {
   const [hasLoadedImage, setHasLoadedImage] = useState(false);
   const [hasLoadedError, setHasLoadedError] = useState(false);
@@ -31,12 +35,17 @@ export function Book({
   const shouldDisplaySkeleton = !hasLoadedImage && !shouldDisplayFallback;
 
   const ContainerTag = link ? 'a' : 'div';
-  const containerProps = link ? { href: link } : {};
+  const containerProps = link
+    ? { ...rawContainerProps, href: link }
+    : rawContainerProps || {};
 
   useLayoutEffect(() => {
     if (image === null) {
       setHasLoadedImage(true);
       setHasLoadedError(true);
+    } else {
+      setHasLoadedImage(false);
+      setHasLoadedError(false);
     }
   }, [image]);
 
@@ -48,13 +57,14 @@ export function Book({
       )}
     >
       <ContainerTag
+        {...containerProps}
         className={cn(
           'absolute inset-0 block size-full rounded-l-sm rounded-r-md bg-muted text-muted-foreground transition-all',
           scalable !== false
-            ? 'cursor-pointer active:scale-95 [html[data-os-type$=pc]_&]:hover:scale-105 [html[data-os-type$=pc]_&]:active:scale-none'
+            ? 'cursor-pointer active:scale-[98%] [html[data-os-type$=pc]_&]:hover:scale-[102%] [html[data-os-type$=pc]_&]:active:scale-none'
             : null,
+          containerProps.className,
         )}
-        {...containerProps}
       >
         {shouldDisplayImage ? (
           image ? (
@@ -67,6 +77,7 @@ export function Book({
             />
           ) : null
         ) : null}
+
         {shouldDisplayFallback ? (
           fallback === true ? (
             <div className="flex size-full items-center justify-center p-2 md:p-4">
@@ -78,8 +89,12 @@ export function Book({
             fallback
           )
         ) : null}
+
         {children}
-        <SkeletonOverlay hidden={!shouldDisplaySkeleton} />
+
+        {skeleton !== false ? (
+          <SkeletonOverlay hidden={!shouldDisplaySkeleton} />
+        ) : null}
       </ContainerTag>
     </div>
   );

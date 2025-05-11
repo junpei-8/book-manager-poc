@@ -67,7 +67,7 @@ export function LoginDrawer() {
       <DrawerContent
         className={cn(
           'bg-accent text-accent-foreground [&>div:first-child]:hidden',
-          isRightDirection ? 'vaul-rounded-right' : 'h-[100%] !max-h-[88dvh]',
+          isRightDirection ? 'vaul-rounded-right' : 'h-[100%] !max-h-[90svh]',
         )}
       >
         <DrawerHeader>
@@ -78,7 +78,7 @@ export function LoginDrawer() {
 
         <DrawerMain innerProps={{ className: 'm-auto justify-center' }}>
           <div className="flex flex-col items-center p-4">
-            <h2 className="size-3xs text-xl font-semibold">
+            <h2 className="size-[240px] text-xl font-semibold md:size-[320px]">
               <img alt="Book Manager" src="/logo.png" className="size-full" />
             </h2>
           </div>

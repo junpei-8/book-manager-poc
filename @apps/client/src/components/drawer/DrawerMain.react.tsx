@@ -30,7 +30,10 @@ export function DrawerMain({
       disabled={!smoothResizer}
       outerProps={{
         ...outerProps,
-        className: 'scrollbar-hidden',
+        className: cn(
+          'scrollbar-hidden duration-[480ms]',
+          outerProps.className,
+        ),
       }}
       innerProps={{
         ...innerProps,

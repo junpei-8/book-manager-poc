@@ -240,3 +240,18 @@
 .vaul-rounded-right[data-vaul-drawer-direction='right']:after {
   display: none;
 }
+
+@media (max-width: 48rem) {
+  [data-vaul-drawer],
+  [data-vaul-overlay],
+  [vaul-drawer-wrapper] {
+    /* transition-timing-function: cubic-bezier(0.24, 0.64, 0.48, 1) !important;
+    animation-timing-function: cubic-bezier(0.24, 0.64, 0.48, 1) !important; */
+    /* transition-timing-function: cubic-bezier(0.32, 0.4, 0.2, 1) !important; */
+    /* animation-timing-function: cubic-bezier(0.32, 0.4, 0.2, 1) !important; */
+    transition-duration: 320ms !important;
+    animation-duration: 320ms !important;
+    transition-timing-function: var(--ease-in-out) !important;
+    animation-timing-function: var(--ease-in-out) !important;
+  }
+}

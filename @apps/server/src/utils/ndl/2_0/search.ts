@@ -1,8 +1,28 @@
-import {
-  type NDLSearchMultipleItem as Multiple,
-  type NDLSearchSingleItem as Single,
-  type NDLSearchItemTextValue as TextValue,
-} from './search-common.type';
+import { XMLParser } from 'fast-xml-parser';
+
+/**
+ * 基本的な文字列型の型。
+ */
+export interface NDLOpenSearchItemTextValueV2_0 {
+  '#text': string;
+}
+
+/**
+ * 国立国会図書館サーチ API の単一の項目の型。
+ */
+export type NDLOpenSearchSingleItemV2_0<T> = T;
+
+/**
+ * 国立国会図書館サーチ API の複数の項目の型。
+ */
+export type NDLOpenSearchMultipleItemV2_0<T> = T | T[];
+
+/** @ignore */
+type TextValue = NDLOpenSearchItemTextValueV2_0;
+/** @ignore */
+type Single<T> = NDLOpenSearchSingleItemV2_0<T>;
+/** @ignore */
+type Multiple<T> = NDLOpenSearchMultipleItemV2_0<T>;
 
 /**
  * 国立国会図書館 OpenSearch API（v2.0）に渡す検索パラメータ。\
@@ -10,7 +30,7 @@ import {
  *
  * @see {@link https://ndlsearch.ndl.go.jp/file/help/api/specifications/ndlsearch_api_20250326.pdf | Document (PDF) / 12 page}
  */
-export interface NDLSearchParamsV2_0 {
+export interface NDLOpenSearchParamsV2_0 {
   /**
    * データプロバイダID（例: iss-ndl-opac, aozoraなど）。\
    * 複数指定は空白区切りで OR 条件となる。\
@@ -96,16 +116,16 @@ export interface NDLSearchParamsV2_0 {
 /**
  * 国立国会図書館サーチ API レスポンス。 (DC-NDL Simple ver.2.0準拠)
  */
-export interface NDLSearchResponseV2_0 {
+export interface NDLOpenSearchResponseV2_0 {
   rss: {
-    channel: NDLSearchResultV2_0;
+    channel: NDLOpenSearchResultV2_0;
   };
 }
 
 /**
  * 国立国会図書館サーチ API レスポンスのリザルト・チャンネル。(DC-NDL Simple ver.2.0準拠)
  */
-export interface NDLSearchResultV2_0 {
+export interface NDLOpenSearchResultV2_0 {
   title: Multiple<TextValue>;
   link: Multiple<TextValue>;
   description?: Multiple<TextValue>;
@@ -113,7 +133,7 @@ export interface NDLSearchResultV2_0 {
   'openSearch:totalResults': Single<TextValue>;
   'openSearch:startIndex': Single<TextValue>;
   'openSearch:itemsPerPage': Single<TextValue>;
-  item?: Multiple<NDLSearchItemV2_0>;
+  item?: Multiple<NDLOpenSearchItemV2_0>;
 }
 
 /**
@@ -121,7 +141,7 @@ export interface NDLSearchResultV2_0 {
  *
  * @see {@link https://ndlsearch.ndl.go.jp/file/renkei/dcndl/dcndl_simple_format_ver.2.0_20210104.pdf | Document (PDF)}
  */
-export interface NDLSearchItemV2_0 {
+export interface NDLOpenSearchItemV2_0 {
   /* eslint-disable jsdoc/multiline-blocks */
 
   // #########################
@@ -438,4 +458,44 @@ export interface NDLSearchItemV2_0 {
   'dcterms:rightsHolder'?: Multiple<TextValue>;
 
   /* eslint-enable jsdoc/multiline-blocks */
+}
+
+/**
+ * 国立国会図書館の検索 API を使用する。
+ *
+ * @param   params 検索パラメータ。
+ *
+ * @returns        検索結果。（総件数と本などの情報の配列）
+ *
+ * @see {@link https://ndlsearch.ndl.go.jp/file/help/api/specifications/ndlsearch_api_20250326.pdf | Document (PDF) / 12 page}
+ */
+export async function fetchNDLOpenSearchV2_0(params: NDLOpenSearchParamsV2_0) {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value != null && value !== '') query.set(key, value.toString());
+  }
+
+  const NDL_API_ENDPOINT = 'https://iss.ndl.go.jp/api/opensearch';
+  const url = `${NDL_API_ENDPOINT}?${query.toString()}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+
+  const xmlText = await response.text();
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: '@',
+    alwaysCreateTextNode: true,
+    parseTagValue: false,
+    parseAttributeValue: false,
+  });
+
+  const parsed = parser.parse(xmlText) as NDLOpenSearchResponseV2_0;
+  const channel = parsed?.rss?.channel;
+  if (!channel) {
+    throw new Error('Invalid response');
+  }
+
+  return channel;
 }

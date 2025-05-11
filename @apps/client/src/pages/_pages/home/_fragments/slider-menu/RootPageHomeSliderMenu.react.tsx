@@ -21,6 +21,7 @@ import { memo, useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { EffectCoverflow } from 'swiper/modules';
 import { useHydration } from '../../../../../hooks/hydrate';
+import { toast } from 'sonner';
 
 /**
  * @jsx
@@ -40,8 +41,17 @@ export function RootPageHomeSliderMenu() {
     // Swiper を初期化
     swiperRef.current = initializeSwiper(container);
 
+    // NOTE: Safari で Swiper の初期レンダリングの計算が間違ってしまうため、Initialize 後に再計算を行う。
+    queueMicrotask(() => {
+      swiperRef.current?.destroy();
+      swiperRef.current = initializeSwiper(container);
+    });
+
     // eslint-disable-next-line jsdoc/require-jsdoc
-    return () => swiperRef.current?.destroy();
+    return () => {
+      swiperRef.current?.destroy();
+      swiperRef.current = null;
+    };
   }, [hasHydrated]);
 
   // Styles
@@ -126,7 +136,7 @@ const BookCard = memo(
     return (
       <a href={href} onClick={(event) => onClickCard(index, swiperRef, event)}>
         <BentoCardWithoutLink
-          className="force-border-none h-full w-full"
+          className="h-full w-full force-border-none"
           Icon={BookIcon}
           name="本を追加する"
           description="あなたの読書の軌跡を残しましょう。"

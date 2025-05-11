@@ -76,7 +76,7 @@ export function RootPageHeaderProfileDrawerWithTrigger() {
       <DrawerContent
         className={cn(
           'bg-accent text-accent-foreground',
-          isRightDirection ? 'vaul-rounded-right' : '!max-h-[88dvh]',
+          isRightDirection ? 'vaul-rounded-right' : '!max-h-[90svh]',
         )}
       >
         {canDisplay ? (

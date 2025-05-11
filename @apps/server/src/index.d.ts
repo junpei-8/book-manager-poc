@@ -1,6 +1,2 @@
-import type app from './index';
-
-/**
- * Server.
- */
-export type Server = typeof app;
+// For exports.
+export type * from './index.type';

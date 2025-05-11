@@ -25,26 +25,25 @@ import { Book } from '../../../../../components/book/Book.react';
 import { HapticButton } from '../../../../../components/button/HapticButton.react';
 import { DrawerMain } from '../../../../../components/drawer/DrawerMain.react';
 import { isbnSchema } from '../../../../../schemas/isbn';
-import { ensureArray } from '../../../../../utils/array';
-import { extractBasicPropertiesByNDLItem } from '../../../../../utils/ndl/property';
-import { searchNDL } from '../../../../../utils/ndl/search';
-import { type NDLSearchItem } from '../../../../../utils/ndl/search.type';
+import { server } from '../../../../../utils/server';
 import { bookScreenStore } from '../BookScreen.state';
-import { bookScreenNewSearchDrawerStore } from './BookScreenNewSearchDrawer.state';
+import { bookScreenNewSearchStore } from './BookScreenNewSearch.state';
+import { type StoreValue } from 'nanostores';
 
 /**
  * @jsx
  */
 export function BookScreenNewSearchDrawer() {
-  const isOpen = useStore(bookScreenNewSearchDrawerStore.isOpen);
+  const isOpen = useStore(bookScreenNewSearchStore.isOpenDrawer);
 
   return (
     <Drawer
       open={isOpen}
       shouldScaleBackground
-      onOpenChange={bookScreenNewSearchDrawerStore.isOpen.set}
+      repositionInputs={false}
+      onOpenChange={bookScreenNewSearchStore.isOpenDrawer.set}
       onAnimationEnd={(open) => {
-        if (!open) bookScreenNewSearchDrawerStore.list.reset();
+        if (!open) bookScreenNewSearchStore.list.reset();
       }}
     >
       <SearchDrawerContent />
@@ -54,18 +53,18 @@ export function BookScreenNewSearchDrawer() {
 
 /** @ignore */
 const SearchDrawerContent = memo(() => (
-  <DrawerContent className="!max-h-[88dvh] [&>div:first-child]:hidden">
+  <DrawerContent className="!max-h-[90svh] [&>div:first-child]:hidden">
     <form
       className="flex flex-col gap-4 overflow-hidden"
       onSubmit={(event) => {
-        const isFetching = bookScreenNewSearchDrawerStore.list.isFetching.get();
+        const isFetching = bookScreenNewSearchStore.list.isFetching.get();
         if (isFetching) return;
 
-        const property = bookScreenNewSearchDrawerStore.list.createProperty();
+        const property = bookScreenNewSearchStore.list.createProperty();
         if (!property) return;
 
         event.preventDefault();
-        bookScreenNewSearchDrawerStore.list.update();
+        bookScreenNewSearchStore.list.update();
       }}
     >
       <SearchDrawerHeader />
@@ -76,7 +75,7 @@ const SearchDrawerContent = memo(() => (
 
 /** @ignore */
 const SearchDrawerHeader = memo(() => {
-  const mode = useStore(bookScreenNewSearchDrawerStore.mode);
+  const mode = useStore(bookScreenNewSearchStore.drawerMode);
 
   return (
     <DrawerHeader
@@ -106,7 +105,7 @@ const SearchDrawerHeader = memo(() => {
 
 /** @ignore */
 const SearchDrawerMain = memo(() => {
-  const mode = useStore(bookScreenNewSearchDrawerStore.mode);
+  const mode = useStore(bookScreenNewSearchStore.drawerMode);
 
   return (
     <DrawerMain
@@ -131,8 +130,8 @@ const SearchDrawerMain = memo(() => {
 
 /** @ignore */
 const SearchKeywordInput = memo(() => {
-  const keyword = useStore(bookScreenNewSearchDrawerStore.list.input.any);
-  const isFetching = useStore(bookScreenNewSearchDrawerStore.list.isFetching);
+  const keyword = useStore(bookScreenNewSearchStore.list.input.keyword);
+  const isFetching = useStore(bookScreenNewSearchStore.list.isFetching);
 
   return (
     <Input
@@ -143,7 +142,7 @@ const SearchKeywordInput = memo(() => {
       disabled={isFetching}
       className="bg-card"
       onChange={(e) =>
-        bookScreenNewSearchDrawerStore.list.input.any.set(e.target.value)
+        bookScreenNewSearchStore.list.input.keyword.set(e.target.value)
       }
     />
   );
@@ -164,7 +163,7 @@ const SearchBarcodeScanner = memo(() => {
 
   return (
     // 100vh にしているが、実際には画面いっぱいになるだけ
-    <div className="mx-4 h-[100vh] rounded-xl bg-black">
+    <div className="relative mx-4 flex h-[100vh] flex-col overflow-hidden rounded-2xl bg-black">
       <Scanner
         formats={['ean_13']}
         sound={false}
@@ -175,8 +174,6 @@ const SearchBarcodeScanner = memo(() => {
         styles={{
           container: {
             background: 'black',
-            overflow: 'hidden',
-            borderRadius: '1rem',
           },
           video: {
             background: 'black',
@@ -185,7 +182,7 @@ const SearchBarcodeScanner = memo(() => {
         onScan={onScan}
         onError={onError}
       >
-        <div className="pointer-events-none relative top-1/2 left-1/2 flex size-full h-[128px] w-[280px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg border-2 border-white/50 shadow-[0_0_0_1000px_rgba(0,0,0,0.6)]">
+        <div className="pointer-events-none relative top-1/2 left-1/2 z-10 flex size-full h-[128px] w-[280px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg border-2 border-white/50 shadow-[0_0_0_1000px_rgba(0,0,0,0.6)]">
           <div className="absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-white/50" />
           <div className="absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-white/50" />
           <div className="absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-white/50" />
@@ -230,18 +227,26 @@ async function onScanSearchBarcode(props: {
   if (!isbn) return;
   try {
     setFetching(true);
-    const result = await searchNDL({ isbn, idx: 1, cnt: 1 });
+    const response = await server.api.ndl.books.isbn.$get({
+      query: { value: isbn },
+    });
 
-    const item = result.item ? ensureArray(result.item)[0] : null;
+    if (!response.ok) throw new Error();
+    const item = (await response.json()).item;
+
+    // 本が１つも見つからない場合
     if (!item) {
       setFetching(false);
       toast.error('本が見つかりませんでした。');
-      bookScreenNewSearchDrawerStore.isOpen.set(false);
+      bookScreenNewSearchStore.isOpenDrawer.set(false);
       return;
     }
 
-    bookScreenNewSearchDrawerStore.isOpen.set(false);
+    bookScreenNewSearchStore.isOpenDrawer.set(false);
+    bookScreenNewSearchStore.isConfirmed.set(true);
     bookScreenStore.setDataFromNDLSearchItem(item);
+
+    // ↓ エラーが発生した場合はトーストを表示する
   } catch {
     setFetching(false);
     toast.error('本の情報を取得できませんでした。');
@@ -250,13 +255,13 @@ async function onScanSearchBarcode(props: {
 
 /** @ignore */
 const SearchSubmitButton = memo(() => {
-  const data = useStore(bookScreenNewSearchDrawerStore.list.data);
-  const error = useStore(bookScreenNewSearchDrawerStore.list.error);
-  const isFetching = useStore(bookScreenNewSearchDrawerStore.list.isFetching);
+  const data = useStore(bookScreenNewSearchStore.list.data);
+  const error = useStore(bookScreenNewSearchStore.list.error);
+  const isFetching = useStore(bookScreenNewSearchStore.list.isFetching);
 
   const hasLoaded = data !== undefined || error !== undefined;
   return (
-    <div className="size-full px-4">
+    <div className="relative size-full px-4">
       <HapticButton
         className={cn(
           'w-full opacity-100 fade-transition',
@@ -273,12 +278,10 @@ const SearchSubmitButton = memo(() => {
 
 /** @ignore */
 const SearchResultList = memo(() => {
-  const data = useStore(bookScreenNewSearchDrawerStore.list.data);
-  const error = useStore(bookScreenNewSearchDrawerStore.list.error);
-  const isFetching = useStore(bookScreenNewSearchDrawerStore.list.isFetching);
-  const isMoreFetching = useStore(
-    bookScreenNewSearchDrawerStore.list.isMoreFetching,
-  );
+  const data = useStore(bookScreenNewSearchStore.list.data);
+  const error = useStore(bookScreenNewSearchStore.list.error);
+  const isFetching = useStore(bookScreenNewSearchStore.list.isFetching);
+  const isMoreFetching = useStore(bookScreenNewSearchStore.list.isMoreFetching);
 
   const hasLoaded = data !== undefined || error !== undefined;
   return (
@@ -317,39 +320,43 @@ const SearchResultList = memo(() => {
 });
 
 /** @ignore */
-const SearchResultListItem = memo(
-  ({ item }: { item: NDLSearchItem | undefined }) => {
-    if (!item) return null;
+type SearchResultListItemType = NonNullable<
+  StoreValue<typeof bookScreenNewSearchStore.list.data>
+>[number];
 
-    const properties = extractBasicPropertiesByNDLItem(item);
+/** @ignore */
+const SearchResultListItem = memo(
+  ({ item }: { item: SearchResultListItemType }) => {
+    if (!item) return null;
     return (
       <div
         className="group relative flex flex-nowrap gap-4 rounded-xl border bg-card p-4 py-6 text-card-foreground shadow-sm transition-all active:scale-95"
         onClick={() => {
-          bookScreenNewSearchDrawerStore.isOpen.set(false);
+          bookScreenNewSearchStore.isOpenDrawer.set(false);
+          bookScreenNewSearchStore.isConfirmed.set(true);
           bookScreenStore.setDataFromNDLSearchItem(item);
         }}
       >
         <div className="my-auto w-[24%] flex-shrink-0">
           <Book
-            name={properties.title}
-            image={properties.thumbnailUrl}
+            name={item.title}
+            image={item.thumbnailUrl}
             scalable={false}
             fallback
           />
         </div>
         <div className="flex flex-1 flex-col">
           <h3 className="mb-1 line-clamp-2 font-bold md:text-lg">
-            {properties.title}
+            {item.title}
           </h3>
-          {properties.authors ? (
+          {item.authors ? (
             <div className="mb-1 text-xs text-gray-600 md:mb-2 md:text-sm">
-              {properties.authors}
+              {item.authors}
             </div>
           ) : null}
-          {properties.categories ? (
+          {item.categories ? (
             <div className="mt-auto ml-auto scrollbar-hidden flex flex-wrap gap-2 overflow-x-scroll">
-              {properties.categories.split(',').map((category) => (
+              {item.categories.map((category) => (
                 <Badge key={category} className="rounded-full">
                   {category.trim()}
                 </Badge>
@@ -366,17 +373,13 @@ const SearchResultListItem = memo(
 /** @ignore */
 const SearchResultMoreLoader = memo(() => {
   const ref = useRef<HTMLDivElement>(null);
-  const isMoreFetching = useStore(
-    bookScreenNewSearchDrawerStore.list.isMoreFetching,
-  );
+  const isMoreFetching = useStore(bookScreenNewSearchStore.list.isMoreFetching);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) =>
-          entry.isIntersecting
-            ? bookScreenNewSearchDrawerStore.list.update()
-            : null,
+          entry.isIntersecting ? bookScreenNewSearchStore.list.update() : null,
         );
       },
       { threshold: 0.5 },

@@ -1,7 +1,10 @@
-import { ensureArray } from '../array';
-import { type NDLSearchItem, type NDLSearchResult } from './search.type';
-import { createNDLThumbnailUrl } from './thumbnail';
-import { type NDLSearchItemTextValue } from './types/search-common.type';
+import { ensureArray } from '../../array';
+import {
+  type NDLOpenSearchItemTextValueV2_0,
+  type NDLOpenSearchItemV2_0,
+  type NDLOpenSearchResultV2_0,
+} from './search';
+import { createNDLThumbnailUrlV2_0 } from './thumbnail';
 
 /**
  * 国立国会図書館の検索 API の結果から、国立国会図書館の ID を取得します。
@@ -10,7 +13,7 @@ import { type NDLSearchItemTextValue } from './types/search-common.type';
  *
  * @returns         国立国会図書館の ID
  */
-export function extractProviderIdByNDLItem(ndlItem: NDLSearchItem) {
+export function extractProviderIdByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
   const links = [
     ...(ndlItem['link'] ? ensureArray(ndlItem['link']) : []),
     ...(ndlItem['guid'] ? ensureArray(ndlItem['guid']) : []),
@@ -42,7 +45,7 @@ export function extractProviderIdByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         ISBN
  */
-export function extractISBNByNDLItem(ndlItem: NDLSearchItem) {
+export function extractISBNByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
   const identifier = ndlItem['dc:identifier'];
   if (!identifier) return null;
 
@@ -73,7 +76,7 @@ export function extractISBNByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         JP-e コード
  */
-export function extractJPECodeByNDLItem(ndlItem: NDLSearchItem) {
+export function extractJPECodeByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
   const ref = ndlItem['rdfs:seeAlso'];
   if (!ref) return null;
 
@@ -105,7 +108,7 @@ export function extractJPECodeByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         タイトル
  */
-export function extractTitleByNDLItem(ndlItem: NDLSearchItem) {
+export function extractTitleByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
   const dcTitle = ndlItem['dc:title'];
   if (dcTitle) {
     const dcTitles = ensureArray(dcTitle);
@@ -130,8 +133,8 @@ export function extractTitleByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         著者（複数の場合はカンマ区切り）
  */
-export function extractAuthorsByNDLItem(ndlItem: NDLSearchItem) {
-  function extract(texts: NDLSearchItemTextValue[]) {
+export function extractAuthorsByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
+  function extract(texts: NDLOpenSearchItemTextValueV2_0[]) {
     return (
       texts
         .filter((v) => v && v['#text'])
@@ -167,7 +170,7 @@ export function extractAuthorsByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         カテゴリ（複数の場合はカンマ区切り）
  */
-export function extractCategoriesByNDLItem(ndlItem: NDLSearchItem) {
+export function extractCategoriesByNDLItemV2_0(ndlItem: NDLOpenSearchItemV2_0) {
   const category = ndlItem['category'];
   if (!category) return null;
 
@@ -187,7 +190,9 @@ export function extractCategoriesByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         出版日（複数の場合はカンマ区切り）
  */
-export function extractPublishedDatesByNDLItem(ndlItem: NDLSearchItem) {
+export function extractPublishedDatesByNDLItemV2_0(
+  ndlItem: NDLOpenSearchItemV2_0,
+) {
   const pubDate = ndlItem['pubDate'];
   if (!pubDate) return null;
 
@@ -207,17 +212,19 @@ export function extractPublishedDatesByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         サムネイル URL
  */
-export function extractNDLThumbnailUrlByNDLItem(ndlItem: NDLSearchItem) {
-  const jpeCode = extractJPECodeByNDLItem(ndlItem)?.trim();
+export function extractNDLThumbnailUrlByNDLItemV2_0(
+  ndlItem: NDLOpenSearchItemV2_0,
+) {
+  const jpeCode = extractJPECodeByNDLItemV2_0(ndlItem)?.trim();
   if (jpeCode) {
     const _jpeCode = jpeCode.trim();
-    if (_jpeCode) return createNDLThumbnailUrl(_jpeCode);
+    if (_jpeCode) return createNDLThumbnailUrlV2_0(_jpeCode);
   }
 
-  const isbn = extractISBNByNDLItem(ndlItem);
+  const isbn = extractISBNByNDLItemV2_0(ndlItem);
   if (isbn) {
     const _isbn = isbn.trim().replaceAll('-', '');
-    if (_isbn) return createNDLThumbnailUrl(_isbn);
+    if (_isbn) return createNDLThumbnailUrlV2_0(_isbn);
   }
 
   return null;
@@ -230,14 +237,16 @@ export function extractNDLThumbnailUrlByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns         書籍の基本情報
  */
-export function extractBasicPropertiesByNDLItem(ndlItem: NDLSearchItem) {
+export function extractBasicPropertiesByNDLItemV2_0(
+  ndlItem: NDLOpenSearchItemV2_0,
+) {
   return {
-    providerId: extractProviderIdByNDLItem(ndlItem),
-    title: extractTitleByNDLItem(ndlItem),
-    authors: extractAuthorsByNDLItem(ndlItem),
-    categories: extractCategoriesByNDLItem(ndlItem),
-    publishedDates: extractPublishedDatesByNDLItem(ndlItem),
-    thumbnailUrl: extractNDLThumbnailUrlByNDLItem(ndlItem),
+    providerId: extractProviderIdByNDLItemV2_0(ndlItem),
+    title: extractTitleByNDLItemV2_0(ndlItem),
+    authors: extractAuthorsByNDLItemV2_0(ndlItem),
+    categories: extractCategoriesByNDLItemV2_0(ndlItem),
+    publishedDates: extractPublishedDatesByNDLItemV2_0(ndlItem),
+    thumbnailUrl: extractNDLThumbnailUrlByNDLItemV2_0(ndlItem),
   };
 }
 
@@ -248,15 +257,17 @@ export function extractBasicPropertiesByNDLItem(ndlItem: NDLSearchItem) {
  *
  * @returns           取得情報
  */
-export function extractResultStatusByNDLResult(ndlResult: NDLSearchResult) {
-  const page = Number(ndlResult['openSearch:startIndex']['#text']) || 0;
-  const perPage = Number(ndlResult['openSearch:itemsPerPage']['#text']) || 0;
+export function extractResultStatusByNDLResultV2_0(
+  ndlResult: NDLOpenSearchResultV2_0,
+) {
+  const count = Number(ndlResult['openSearch:itemsPerPage']['#text']) || 0;
+  const startIndex = Number(ndlResult['openSearch:startIndex']['#text']) || 0;
   const totalCount = Number(ndlResult['openSearch:totalResults']['#text']) || 0;
 
   return {
-    page,
-    perPage,
+    count,
+    startIndex,
     totalCount,
-    hasNextPage: page * perPage < totalCount,
+    hasNextPage: startIndex + count < totalCount,
   };
 }

@@ -71,9 +71,6 @@ importers:
       es-toolkit:
         specifier: ^1.34.1
         version: 1.36.0
-      fast-xml-parser:
-        specifier: ^5.2.1
-        version: 5.2.1
       hono:
         specifier: ^4.7.6
         version: 4.7.8
@@ -199,6 +196,9 @@ importers:
       es-toolkit:
         specifier: ^1.34.1
         version: 1.36.0
+      fast-xml-parser:
+        specifier: ^5.2.1
+        version: 5.2.1
       hono:
         specifier: ^4.7.6
         version: 4.7.8

@@ -1,6 +1,5 @@
 import { atom } from 'nanostores';
-import { extractBasicPropertiesByNDLItem } from '../../../../utils/ndl/property';
-import { type NDLSearchItem } from '../../../../utils/ndl/search.type';
+import type { NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-books.type';
 
 /**
  * BookViewer の状態。
@@ -14,15 +13,9 @@ export const bookScreenStore = {
 
   dataset: {
     data: atom<
-      | {
-          providerId: string;
-          providerType: string;
-          title: string;
-          authors: string | null;
-          categories: string | null;
-          thumbnailUrl: string | null;
-          publishedDates: string | null;
-        }
+      | (NDLBooksItem & {
+          providerType: 'ndl_open_search';
+        })
       | null
       | undefined
     >(null),
@@ -37,20 +30,10 @@ export const bookScreenStore = {
   // ## Action ##
   // ############
 
-  setDataFromNDLSearchItem(ndlSearchItem: NDLSearchItem) {
-    const properties = extractBasicPropertiesByNDLItem(ndlSearchItem);
-
-    const title = properties.title;
-    const providerId = properties.providerId;
-    if (!title || !providerId) {
-      return;
-    }
-
+  setDataFromNDLSearchItem(ndlBooksItem: NDLBooksItem) {
     this.dataset.data.set({
-      ...properties,
-      title,
-      providerId,
       providerType: 'ndl_open_search',
+      ...ndlBooksItem,
     });
   },
 };

@@ -158,7 +158,7 @@ function getSlideMap(
           {...props}
           key={index}
           className={cn(
-            'swiper-slide min-h-[100dvh]',
+            'swiper-slide min-h-[100svh]',
             isInitialSlide ? 'swiper-initial-slide' : null,
             props.className,
           )}
@@ -256,7 +256,7 @@ function initializeSwiper(
         options.on?.slideChange?.(swiper);
       },
       activeIndexChange: (swiper) => {
-        if (hasChangedActiveIndex && vibration) vibrate(vibration);
+        // if (hasChangedActiveIndex && vibration) vibrate(vibration);
         activeIndexChangesRef.current?.(swiper.activeIndex);
         hasChangedActiveIndex = true;
       },

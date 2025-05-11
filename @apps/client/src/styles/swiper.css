@@ -17,6 +17,8 @@
   animation: fadeIn 240ms var(--ease-in-out) both;
 }
 
-:root {
-  --swiper-wrapper-transition-timing-function: var(--ease-in-out);
+@media (max-width: 48rem) {
+  :root {
+    --swiper-wrapper-transition-timing-function: var(--ease-in-out);
+  }
 }

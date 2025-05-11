@@ -1,6 +1,6 @@
 ---
-import { BookScreenContent } from './BookScreenContent.react';
-import { BookScreenNewDataViewer } from './new/BookScreenNewDataViewer.react';
+import { BookScreenNewContentDetails } from './new/BookScreenNewContentDetails.react';
+import { BookScreenNewContentThumbnail } from './new/BookScreenNewContentThumbnail.react';
 import { BookScreenNewEntryAction } from './new/BookScreenNewEntryAction.react';
 import { BookScreenNewSearchDrawer } from './new/BookScreenNewSearchDrawer.react';
 
@@ -11,23 +11,18 @@ type Props = {
 ---
 
 <div class="book-viewer wrapper" data-mode={props.mode}>
-  <BookScreenContent
-    client:idle
-    mode={props.mode}
-    transition:persist="book-viewer-content"
-  />
-
   {
     props.mode === 'new' ? (
       <>
-        <BookScreenNewDataViewer client:idle />
+        <BookScreenNewContentThumbnail client:idle />
+        <BookScreenNewContentDetails client:idle />
         <BookScreenNewSearchDrawer client:idle />
         <BookScreenNewEntryAction client:idle />
       </>
     ) : null
   }
 
-  {props.mode === 'view' ? '<BookScreenViewDetails />' : null}
+  {props.mode === 'view' ? <></> : null}
 
   <!-- {props.mode === 'new' ? <a href="/books/~id">詳細を見る</a> : null}
   {props.mode === 'view' ? <a href="/books/new">新規作成</a> : null} -->
@@ -58,10 +53,15 @@ type Props = {
   } */
 
   .book-viewer[data-mode='new'] {
-    max-width: 400px;
+    max-width: 32rem;
     gap: 1rem;
     padding-top: 4.25rem;
-    padding-bottom: 4.25rem;
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 40rem) {
+    .book-viewer[data-mode='new'] {
+      gap: 2rem;
+    }
   }
 
   .book-viewer[data-mode='view'] {

@@ -6,12 +6,12 @@ import LayoutSubheader from '../../_layouts/header/LayoutSubheader.astro';
 import BookScreen from '../_components/book-screen/BookScreen.astro';
 ---
 
-<Layout>
+<Layout body={{ root: { class: 'max-h-[100svh] !overflow-hidden' } }}>
   <LayoutSubheader title="本を作成する" />
 
   <LayoutMain class="!p-0">
     <BookScreen mode="new" />
   </LayoutMain>
 
-  <LoginDrawer client:idle />
+  <!-- <LoginDrawer client:idle /> -->
 </Layout>

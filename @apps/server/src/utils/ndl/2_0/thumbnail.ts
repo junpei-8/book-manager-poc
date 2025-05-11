@@ -7,6 +7,6 @@
  *
  * @see {@link https://ndlsearch.ndl.go.jp/help/api/thumbnail | Document}
  */
-export function createNDLThumbnailUrl(isbnOrJPECode: string) {
+export function createNDLThumbnailUrlV2_0(isbnOrJPECode: string) {
   return `https://iss.ndl.go.jp/thumbnail/${isbnOrJPECode}`;
 }

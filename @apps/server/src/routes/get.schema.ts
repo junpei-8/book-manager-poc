@@ -1,6 +1,5 @@
 import { object, optional, string } from 'valibot';
 import { defineValidationSchema } from '../schemas/validation';
-export { type rootGetApi } from './get';
 
 /**
  * Root get query schema.
