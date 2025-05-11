@@ -7,6 +7,7 @@ import {
   bookScreenNewSearchStore,
 } from './BookScreenNewSearch.state';
 import { navigate } from 'astro:transitions/client';
+import { toast } from 'sonner';
 
 /**
  * @jsx
@@ -40,9 +41,10 @@ export function BookScreenNewEntryAction() {
       <HapticButton
         variant="secondary"
         className="grow rounded-full shadow-2xl"
-        onClick={() => {
+        onClick={async () => {
           if (!isSelectedData) return;
-          navigate(`/books/~id?id=${'123'}`, { history: 'replace' });
+          await navigate(`/books/~id?id=${'123'}`, { history: 'replace' });
+          toast.success('本を作成しました！');
           // bookScreenStore.dataset.data.set(null); // new book
         }}
       >

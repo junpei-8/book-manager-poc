@@ -8,6 +8,7 @@ import envScript from '../_scripts/env.js?raw';
 import popstateBlockerScript from '../_scripts/popstate-blocker.js?raw';
 import themeScript from '../_scripts/theme.js?raw';
 import VibrationCheckbox from '../_fragments/VibrationCheckbox.astro';
+import { LoadingIndicator } from '../_fragments/LoadingIndicator.react';
 
 type Props = {
   html?: astroHTML.JSX.Attributes<'html'>;
@@ -43,7 +44,7 @@ const {
     <slot name="head:bottom" />
   </head>
 
-  <body {...bodyProps}>
+  <body {...bodyProps} style="position:relative;">
     <slot name="body:top" />
 
     <slot name="body-root:before" />
@@ -61,6 +62,7 @@ const {
 
     <slot name="body-overlay:before" />
     <Toaster client:idle richColors />
+    <LoadingIndicator client:idle transition:persist="loading-indicator" />
     <VibrationCheckbox />
     <slot name="body-overlay:after" />
 

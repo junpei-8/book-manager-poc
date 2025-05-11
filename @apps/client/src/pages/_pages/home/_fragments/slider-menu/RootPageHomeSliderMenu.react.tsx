@@ -21,7 +21,7 @@ import { memo, useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { EffectCoverflow } from 'swiper/modules';
 import { useHydration } from '../../../../../hooks/hydrate';
-import { toast } from 'sonner';
+import { pageSliderStore } from '../../../../_components/PageSlider.state';
 
 /**
  * @jsx
@@ -112,7 +112,10 @@ const LibraryCard = memo(
     const href = '/library';
 
     return (
-      <a href={href} onClick={(event) => onClickCard(index, swiperRef, event)}>
+      <a
+        href={href}
+        onClick={(event) => onClickCard(index, swiperRef, event, 0)}
+      >
         <BentoCardWithoutLink
           className="h-full w-full"
           Icon={LibraryIcon}
@@ -160,7 +163,10 @@ const StatusCard = memo(
     const href = '/status';
 
     return (
-      <a href={href} onClick={(event) => onClickCard(index, swiperRef, event)}>
+      <a
+        href={href}
+        onClick={(event) => onClickCard(index, swiperRef, event, 2)}
+      >
         <BentoCardWithoutLink
           className="h-full w-full"
           Icon={ActivityIcon}
@@ -258,6 +264,7 @@ function onClickCard(
   index: number,
   swiperRef: React.RefObject<Swiper | null>,
   event: React.MouseEvent<HTMLAnchorElement>,
+  pageSlideIndex?: number,
 ) {
   const swiper = swiperRef.current;
   if (!swiper) {
@@ -268,6 +275,12 @@ function onClickCard(
   const currentIndex = swiper.activeIndex;
   if (currentIndex !== index) {
     swiper.slideTo(index);
+    event.preventDefault();
+    return;
+  }
+
+  if (pageSlideIndex != null) {
+    pageSliderStore.swiperRef.current?.slideTo(pageSlideIndex);
     event.preventDefault();
     return;
   }

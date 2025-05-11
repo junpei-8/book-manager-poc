@@ -7,7 +7,7 @@ import { LoginDrawer } from '../../_components/LoginDrawer.react';
 ---
 
 <Layout body={{ root: { class: 'max-h-[100svh] !overflow-hidden' } }}>
-  <LayoutSubheader title="本を作成する" />
+  <LayoutSubheader client:idle title="本を作成する" />
 
   <LayoutMain class="!px-2 !py-0">
     <BookScreen mode="new" />

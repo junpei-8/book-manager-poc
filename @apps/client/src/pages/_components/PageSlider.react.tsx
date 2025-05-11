@@ -10,6 +10,7 @@ import Swiper from 'swiper';
 import { type SwiperOptions } from 'swiper/types';
 import { useHydration } from '../../hooks/hydrate';
 import { vibrate, type VibrationToken } from '../../utils/vibration';
+import { pageSliderStore } from './PageSlider.state';
 
 /**
  * スライドの表示内容のプロパティ。
@@ -84,7 +85,7 @@ export function PageSlider({
 
   // Swiper の初期化
   const containerRef = useRef<HTMLDivElement>(null);
-  const instanceRef = useRef<Swiper>(null);
+  const instanceRef = pageSliderStore.swiperRef;
   const activeIndexChangesRef = useRef<(index: number) => void>(null);
   useEffect(() => {
     if (!hasHydrated) return;
@@ -103,7 +104,10 @@ export function PageSlider({
     ));
 
     // eslint-disable-next-line jsdoc/require-jsdoc
-    return () => swiper.destroy();
+    return () => {
+      swiper.destroy();
+      instanceRef.current = null;
+    };
   }, [hasHydrated, instanceKey]);
 
   return (
