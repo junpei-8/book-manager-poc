@@ -30,11 +30,13 @@ export function BookScreenContentThumbnail({ mode }: { mode: 'new' | 'view' }) {
           : null,
         isFullSize
           ? 'aspect-auto size-full max-h-[564px] max-w-[400px] grow'
-          : 'w-[160px] sm:w-[240px] lg:w-[320px]',
+          : mode === 'new'
+            ? 'w-[160px] sm:w-[240px] lg:w-[320px]'
+            : 'w-[160px] lg:w-[200px]',
       )}
       name={data?.title}
       image={data?.thumbnailUrl || null}
-      scalable={isFullSize}
+      scalable={false}
       skeleton={!isFullSize}
       fallback={true}
     >
@@ -52,7 +54,7 @@ const SearchBookNavigation = memo(() => {
   return (
     <button
       className={cn(
-        'absolute inset-0 z-10 flex size-full cursor-pointer flex-col items-center justify-center gap-4 bg-muted opacity-100',
+        'absolute inset-0 z-10 flex size-full cursor-pointer flex-col items-center justify-center gap-4 bg-muted opacity-100 transition-all hover:bg-primary/10 active:bg-primary/10',
         isSelectedData ? 'pointer-events-none opacity-0' : null,
       )}
       onClickCapture={() => {

@@ -89,7 +89,14 @@ function observeResizeObserver(
   calcHeight: (rect: DOMRect) => number = (rect) => rect.height,
   calcWidth: (rect: DOMRect) => number = (rect) => rect.width,
 ) {
-  if (disabled) return;
+  if (disabled) {
+    const outerEl = outerElRef.current;
+    if (outerEl) {
+      outerEl.style.removeProperty('height');
+      outerEl.style.removeProperty('width');
+    }
+    return;
+  }
 
   const innerEl = innerElRef.current;
   if (!innerEl || typeof ResizeObserver !== 'function') return;

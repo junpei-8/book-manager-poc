@@ -3,14 +3,21 @@ import { LoginDrawer } from '../../_components/LoginDrawer.react';
 import Layout from '../../_layouts/Layout.astro';
 import LayoutMain from '../../_layouts/main/LayoutMain.astro';
 import BookScreen from '../_components/book-screen/BookScreen.astro';
-import { BooksDetailsSubheader } from './_fragments/BooksDetailsSubheader.react';
+import { BookDetailsSubheader } from './_fragments/BookDetailsSubheader.react';
+import ChatGPTLogoSVG from './_svg/chatgpt.svg?raw';
+import { BookDetailsPhraseList } from './_fragments/phrase/BookDetailsPhraseList.react';
 ---
 
 <Layout>
-  <BooksDetailsSubheader client:idle />
+  <BookDetailsSubheader client:idle>
+    <Fragment slot="chatGPTLogo" set:html={ChatGPTLogoSVG} />
+  </BookDetailsSubheader>
 
   <LayoutMain class="wrapper md:pt-16">
     <BookScreen mode="view" />
+    <BookDetailsPhraseList client:idle>
+      <Fragment slot="chatGPTLogo" set:html={ChatGPTLogoSVG} />
+    </BookDetailsPhraseList>
   </LayoutMain>
 
   <LoginDrawer client:idle />

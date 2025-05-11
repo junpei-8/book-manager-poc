@@ -7,6 +7,7 @@ import { LayoutSubheaderXButton } from './LayoutSubheaderXButton.react';
 type Props = React.JSX.IntrinsicElements['header'] & {
   title: string;
   h1Props?: React.JSX.IntrinsicElements['h1'];
+  rightButton?: React.ReactNode;
 };
 
 /**
@@ -16,6 +17,7 @@ export function LayoutSubheader({
   title,
   className,
   h1Props = {},
+  rightButton,
   ...props
 }: Props) {
   return (
@@ -42,7 +44,7 @@ export function LayoutSubheader({
         <a href="/">
           <img src="/logo.png" alt="logo" className="size-8" />
         </a>
-        <LayoutSubheaderXButton />
+        {rightButton ? rightButton : <LayoutSubheaderXButton />}
       </div>
     </header>
   );

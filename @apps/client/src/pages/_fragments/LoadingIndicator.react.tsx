@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { useLayoutEffect, useState } from 'react';
+import { Loader2Icon } from 'lucide-react';
 import { cn } from '@libs/shadcn/lib/utils';
 import { useHydration } from '../../hooks/hydrate';
 
@@ -47,7 +47,7 @@ export function LoadingIndicator({
       )}
       aria-hidden="true"
     >
-      <Loader2 size={size} color={color} />
+      <Loader2Icon size={size} color={color} strokeWidth={2} />
     </div>
   );
 }

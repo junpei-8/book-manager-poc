@@ -66,7 +66,7 @@ export function LoginDrawer() {
     >
       <DrawerContent
         className={cn(
-          'bg-accent text-accent-foreground [&>div:first-child]:hidden',
+          'bg-accent text-accent-foreground dark:bg-background [&>div:first-child]:hidden',
           isRightDirection ? 'vaul-rounded-right' : 'h-[100%] !max-h-[90svh]',
         )}
       >

@@ -45,7 +45,6 @@ export function BookScreenNewEntryAction() {
           if (!isSelectedData) return;
           await navigate(`/books/~id?id=${'123'}`, { history: 'replace' });
           toast.success('本を作成しました！');
-          // bookScreenStore.dataset.data.set(null); // new book
         }}
       >
         <CheckIcon className="size-6" />

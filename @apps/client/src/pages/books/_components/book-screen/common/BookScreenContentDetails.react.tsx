@@ -19,15 +19,16 @@ export function BookScreenContentDetails(props: { mode: 'new' | 'view' }) {
   return (
     <SmoothResizingContainer
       direction="vertical"
-      disabled={mode === 'view'}
+      disabled={mode !== 'new'}
       outerProps={{
         className: cn(
           '[view-transition-name:book-screen-content-details]',
           'overflow-hidden',
+          mode !== 'new' ? '!h-full' : null,
         ),
       }}
       innerProps={{
-        className: 'relative',
+        className: cn('relative', mode !== 'new' ? 'h-full' : null),
       }}
     >
       {mode === 'new' ? <BookScreenContentSearchDrawerTrigger /> : null}
@@ -90,7 +91,7 @@ const BookScreenContentDetailsView = memo((props: { className?: string }) => {
   return (
     <div
       className={cn(
-        'flex w-full flex-col gap-2 overflow-visible opacity-100 fade-transition',
+        'flex size-full flex-col gap-2 overflow-visible opacity-100 fade-transition',
         isSelectedData
           ? null
           : 'pointer-events-none absolute inset-0 opacity-0',
@@ -98,7 +99,7 @@ const BookScreenContentDetailsView = memo((props: { className?: string }) => {
       )}
     >
       {data ? (
-        <div className="mx-auto flex w-full flex-col p-4">
+        <div className="mx-auto flex size-full flex-col p-4">
           <h3 className="mb-1 font-bold md:text-lg">{data.title}</h3>
           {data.authors ? (
             <div className="mb-1 text-xs text-gray-600 md:mb-2 md:text-sm">
