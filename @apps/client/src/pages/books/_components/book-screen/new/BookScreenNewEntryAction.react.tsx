@@ -2,7 +2,6 @@ import { cn } from '@libs/shadcn/lib/utils';
 import { useStore } from '@nanostores/react';
 import { CheckIcon, XIcon } from 'lucide-react';
 import { HapticButton } from '../../../../../components/button/HapticButton.react';
-import { bookScreenStore } from '../BookScreen.state';
 import {
   bookScreenNewSearchComputedStore,
   bookScreenNewSearchStore,
