@@ -25,9 +25,6 @@ export function BookScreenContentThumbnail({ mode }: { mode: 'new' | 'view' }) {
     <Book
       className={cn(
         '[view-transition-name:book-screen-content-thumbnail]',
-        isFullSize // isSelectedData が解除された時のみアニメーションが発生するように
-          ? 'transition-[height,width,scale] duration-[240ms] ease-in-out'
-          : null,
         isFullSize
           ? 'aspect-auto size-full max-h-[564px] max-w-[400px] grow'
           : mode === 'new'
@@ -54,7 +51,7 @@ const SearchBookNavigation = memo(() => {
   return (
     <button
       className={cn(
-        'absolute inset-0 z-10 flex size-full cursor-pointer flex-col items-center justify-center gap-4 bg-muted opacity-100 transition-all hover:bg-primary/10 active:bg-primary/10',
+        'group absolute inset-0 z-10 flex size-full cursor-pointer flex-col items-center justify-center gap-4 bg-muted opacity-100',
         isSelectedData ? 'pointer-events-none opacity-0' : null,
       )}
       onClickCapture={() => {
@@ -66,6 +63,7 @@ const SearchBookNavigation = memo(() => {
       <p className="text-sm font-bold text-secondary dark:text-primary">
         バーコードから読み取る
       </p>
+      <div className="absolute inset-0 z-10 size-full bg-primary opacity-0 fade-transition group-hover:opacity-5 group-active:opacity-5"></div>
     </button>
   );
 });
