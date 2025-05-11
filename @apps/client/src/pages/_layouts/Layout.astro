@@ -61,9 +61,17 @@ const {
     <slot name="body-root:after" />
 
     <slot name="body-overlay:before" />
-    <Toaster client:idle richColors />
-    <LoadingIndicator client:idle transition:persist="loading-indicator" />
     <VibrationCheckbox />
+    <Toaster
+      client:idle
+      richColors
+      transition:persist-props
+      transition:persist="body-overlay-toaster"
+    />
+    <LoadingIndicator
+      client:idle
+      transition:persist="body-overlay-loading-indicator"
+    />
     <slot name="body-overlay:after" />
 
     <slot name="body:bottom" />

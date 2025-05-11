@@ -42,8 +42,8 @@ export function LoadingIndicator({
   return (
     <div
       className={cn(
-        'pointer-events-none fixed top-3.5 right-4 z-50 animate-spin opacity-0 fade-transition',
-        isLoading ? 'opacity-100' : null,
+        'pointer-events-none fixed top-3.5 right-4 z-50 opacity-0 fade-transition',
+        isLoading ? 'animate-spin opacity-100' : null,
       )}
       aria-hidden="true"
     >
