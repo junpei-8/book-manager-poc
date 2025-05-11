@@ -39,7 +39,7 @@ export function BookScreenNewSearchDrawer() {
   return (
     <Drawer
       open={isOpen}
-      shouldScaleBackground
+      // shouldScaleBackground
       repositionInputs={false}
       onOpenChange={bookScreenNewSearchStore.isOpenDrawer.set}
       onAnimationEnd={(open) => {
