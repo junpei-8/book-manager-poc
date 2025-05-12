@@ -1,8 +1,9 @@
 /** @jsxImportSource react */
 
+import { useLayoutEffect, useRef } from 'react';
 import { useHydration } from '../../../../../hooks/hydrate';
 import { bookScreenStore } from '../BookScreen.state';
-import { useLayoutEffect, useRef } from 'react';
+
 /**
  * @jsx
  */
@@ -25,7 +26,7 @@ export function BookScreenViewIntersectionRatioObserver() {
       { threshold: Array.from({ length: 61 }, (_, i) => i / 60) },
     );
 
-    observer.observe(elementRef.current);
+    observer.observe(elementRef.current); /** @ignore */
     return () => {
       observer.disconnect();
       elementRef.current = null;

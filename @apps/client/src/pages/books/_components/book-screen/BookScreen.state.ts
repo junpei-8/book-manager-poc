@@ -1,5 +1,5 @@
+import { type NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-books.type';
 import { atom } from 'nanostores';
-import type { NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-books.type';
 
 /**
  * BookViewer の状態。

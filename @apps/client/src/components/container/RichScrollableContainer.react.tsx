@@ -57,7 +57,7 @@ export function RichScrollableContainer({
       capture: captureMouseScroll,
     });
 
-    // eslint-disable-next-line jsdoc/require-jsdoc
+    /** @ignore */
     return () =>
       element.removeEventListener('pointerdown', onMouseDownWrapper, {
         capture: captureMouseScroll,

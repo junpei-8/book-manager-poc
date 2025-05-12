@@ -1,3 +1,10 @@
+import { createRequire } from 'node:module';
+
+/**
+ * @see {@link https://nodejs.org/api/module.html#modulecreaterequirefilename | Document}
+ */
+const require = createRequire(import.meta.url);
+
 /**
  * JSDoc configuration.
  *
@@ -9,7 +16,7 @@ export default {
   /**
    * Load the JSDoc plugin.
    */
-  plugins: ['prettier-plugin-jsdoc'],
+  plugins: [require.resolve('prettier-plugin-jsdoc')],
 
   /**
    * Enable TSDoc support.

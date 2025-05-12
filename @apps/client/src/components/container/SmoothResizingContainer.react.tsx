@@ -77,9 +77,7 @@ export function SmoothResizingContainer({
   );
 }
 
-/**
- * @ignore
- */
+/** @ignore */
 function observeResizeObserver(
   outerElRef: React.RefObject<HTMLDivElement | null>,
   innerElRef: React.RefObject<HTMLDivElement | null>,
@@ -122,8 +120,6 @@ function observeResizeObserver(
     }),
   );
 
-  resizeObserver.observe(innerEl);
-
-  // eslint-disable-next-line jsdoc/require-jsdoc
+  resizeObserver.observe(innerEl); /** @ignore */
   return () => resizeObserver.disconnect();
 }

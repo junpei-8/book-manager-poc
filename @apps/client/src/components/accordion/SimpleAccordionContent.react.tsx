@@ -1,8 +1,10 @@
+/** @jsxImportSource react */
+
 import { cn } from '@libs/shadcn/lib/utils';
 import React from 'react';
 
 /**
- * @jsx
+ * アコーディオンのコンテンツを表示するコンポーネントのプロパティ。
  */
 export interface AccordionProps {
   /**
@@ -27,6 +29,8 @@ export interface AccordionProps {
 }
 
 /**
+ * アコーディオンのコンテンツを表示するコンポーネント。
+ *
  * @jsx
  */
 export function SimpleAccordionContent({

@@ -57,6 +57,7 @@ export type VibrateOptions = {
  * バイブレーションを実行する。
  *
  * @param pattern バイブレーションのパターン
+ * @param options バイブレーションのオプション
  */
 export function vibrate(
   pattern: VibratePattern | VibrationToken | VibrationToken[] = ['short'],
@@ -70,6 +71,7 @@ export function vibrate(
  * 環境ごとにバイブレーションを実行する
  *
  * @param   patterns バイブレーションのパターン
+ * @param   options  バイブレーションのオプション
  *
  * @returns          バイブレーションの実行結果
  */

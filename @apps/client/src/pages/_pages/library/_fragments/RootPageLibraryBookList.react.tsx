@@ -41,9 +41,7 @@ export function RootPageLibraryBookList() {
   );
 }
 
-/**
- * @ignore
- */
+/** @ignore */
 const NoBooksState = memo(() => (
   <div className="absolute inset-0 z-10 size-full fade-in-animation bg-background px-4 opacity-0">
     <a className="relative inset-0 flex" href="/books/new">

@@ -2,14 +2,14 @@
 
 import { cn } from '@libs/shadcn/lib/utils';
 import { useStore } from '@nanostores/react';
+import { ScanBarcodeIcon } from 'lucide-react';
+import { memo } from 'react';
 import { Book } from '../../../../../components/book/Book.react';
 import { bookScreenStore } from '../BookScreen.state';
 import {
   bookScreenNewSearchComputedStore,
   bookScreenNewSearchStore,
 } from '../new/BookScreenNewSearch.state';
-import { memo } from 'react';
-import { ScanBarcodeIcon } from 'lucide-react';
 
 /**
  * @jsx

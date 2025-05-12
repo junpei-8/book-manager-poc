@@ -47,7 +47,7 @@ export function RootPageHomeSliderMenu() {
       swiperRef.current = initializeSwiper(container);
     });
 
-    // eslint-disable-next-line jsdoc/require-jsdoc
+    /** @ignore */
     return () => {
       swiperRef.current?.destroy();
       swiperRef.current = null;

@@ -1,6 +1,6 @@
+import { type NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-books.type';
 import { atom, computed } from 'nanostores';
 import { server } from '../../../../../utils/server';
-import type { NDLBooksItem } from '@apps/server/routes/ndl/books/_schemas/ndl-books.type';
 import { bookScreenStore } from '../BookScreen.state';
 
 /** @ignore */
@@ -145,8 +145,6 @@ export const bookScreenNewSearchStore = {
 export const bookScreenNewSearchComputedStore = {
   isSelectedData: computed(
     [bookScreenStore.dataset.data, bookScreenNewSearchStore.isConfirmed],
-    (data, isConfirmed) => {
-      return !!data && isConfirmed;
-    },
+    (data, isConfirmed) => !!data && isConfirmed,
   ),
 };

@@ -1,8 +1,8 @@
 /** @jsxImportSource react */
 
-import { useLayoutEffect, useState } from 'react';
-import { Loader2Icon } from 'lucide-react';
 import { cn } from '@libs/shadcn/lib/utils';
+import { Loader2Icon } from 'lucide-react';
+import { useLayoutEffect, useState } from 'react';
 import { useHydration } from '../../hooks/hydrate';
 
 /**
@@ -52,6 +52,7 @@ export function LoadingIndicator({
   );
 }
 
+/** @ignore */
 function setupLoadingIndicator(setIsLoaded: (isLoaded: boolean) => void) {
   function beforePreparation() {
     setIsLoaded(true);
@@ -63,6 +64,7 @@ function setupLoadingIndicator(setIsLoaded: (isLoaded: boolean) => void) {
   document.addEventListener('astro:before-preparation', beforePreparation);
   document.addEventListener('astro:before-swap', beforeSwap);
 
+  /** @ignore */
   return () => {
     document.removeEventListener('astro:before-preparation', beforePreparation);
     document.removeEventListener('astro:before-swap', beforeSwap);

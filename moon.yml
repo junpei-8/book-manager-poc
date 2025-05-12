@@ -27,19 +27,19 @@ tasks:
   #############
 
   release:
-    command: 'bun changeset'
+    command: 'pnpm changeset'
     preset: 'server'
 
   release-version:
-    command: 'bun changeset version'
+    command: 'pnpm changeset version'
     preset: 'server'
 
   release-tag:
-    command: 'bun changeset tag'
+    command: 'pnpm changeset tag'
     preset: 'server'
 
   release-publish:
-    command: 'bun changeset publish'
+    command: 'pnpm changeset publish'
     preset: 'server'
 
   ###########
@@ -47,5 +47,7 @@ tasks:
   ###########
 
   check-types:
+    inputs:
+      - '**/*'
     options:
       runInCI: true

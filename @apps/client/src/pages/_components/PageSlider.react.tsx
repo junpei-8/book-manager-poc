@@ -103,7 +103,7 @@ export function PageSlider({
       activeIndexChangesRef,
     ));
 
-    // eslint-disable-next-line jsdoc/require-jsdoc
+    /** @ignore */
     return () => {
       swiper.destroy();
       instanceRef.current = null;

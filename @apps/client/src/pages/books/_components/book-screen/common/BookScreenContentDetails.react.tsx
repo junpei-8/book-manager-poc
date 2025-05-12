@@ -1,5 +1,6 @@
 /** @jsxImportSource react */
 
+import { Badge } from '@libs/shadcn/components/ui/badge';
 import { cn } from '@libs/shadcn/lib/utils';
 import { useStore } from '@nanostores/react';
 import { CodeIcon, KeyboardIcon } from 'lucide-react';
@@ -7,9 +8,10 @@ import { memo } from 'react';
 import { HapticButton } from '../../../../../components/button/HapticButton.react';
 import { SmoothResizingContainer } from '../../../../../components/container/SmoothResizingContainer.react';
 import { bookScreenStore } from '../BookScreen.state';
-import { Badge } from '@libs/shadcn/components/ui/badge';
-import { bookScreenNewSearchStore } from '../new/BookScreenNewSearch.state';
-import { bookScreenNewSearchComputedStore } from '../new/BookScreenNewSearch.state';
+import {
+  bookScreenNewSearchComputedStore,
+  bookScreenNewSearchStore,
+} from '../new/BookScreenNewSearch.state';
 
 /**
  * @jsx
@@ -79,9 +81,7 @@ const BookScreenContentSearchDrawerTrigger = memo(() => {
   );
 });
 
-/**
- * @jsx
- */
+/** @ignore */
 const BookScreenContentDetailsView = memo((props: { className?: string }) => {
   const data = useStore(bookScreenStore.dataset.data);
   const isSelectedData = useStore(

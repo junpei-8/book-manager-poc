@@ -18,6 +18,7 @@ import { cn } from '@libs/shadcn/lib/utils';
 import { useStore } from '@nanostores/react';
 import { Scanner, type IDetectedBarcode } from '@yudiel/react-qr-scanner';
 import { AlertCircleIcon, InfoIcon, Loader2Icon } from 'lucide-react';
+import { type StoreValue } from 'nanostores';
 import { memo, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { safeParse } from 'valibot';
@@ -28,7 +29,6 @@ import { isbnSchema } from '../../../../../schemas/isbn';
 import { server } from '../../../../../utils/server';
 import { bookScreenStore } from '../BookScreen.state';
 import { bookScreenNewSearchStore } from './BookScreenNewSearch.state';
-import { type StoreValue } from 'nanostores';
 
 /**
  * @jsx
@@ -389,8 +389,7 @@ const SearchResultMoreLoader = memo(() => {
       { threshold: 0.5 },
     );
 
-    if (ref.current) observer.observe(ref.current);
-    // eslint-disable-next-line jsdoc/require-jsdoc
+    if (ref.current) observer.observe(ref.current); /** @ignore */
     return () => observer.disconnect();
   }, []);
 

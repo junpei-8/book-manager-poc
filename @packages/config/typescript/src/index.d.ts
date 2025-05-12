@@ -1,2 +1,2 @@
-/// <reference types="./types/ts-reset.d.ts" />
-/// <reference types="./types/type-fest.d.ts" />
+// For exports.
+/// <reference path="./index.type.ts" />

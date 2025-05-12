@@ -1,18 +1,18 @@
 /** @jsxImportSource react */
 
-import { useStore } from '@nanostores/react';
-import { bookScreenStore } from '../../_components/book-screen/BookScreen.state';
-import { LayoutSubheader } from '../../../_layouts/header/LayoutSubheader.react';
-import { useHydration } from '../../../../hooks/hydrate';
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@libs/shadcn/components/ui/dropdown-menu';
-import { DropdownMenuTrigger } from '@libs/shadcn/components/ui/dropdown-menu';
-import { DropdownMenu } from '@libs/shadcn/components/ui/dropdown-menu';
-import { HapticButton } from '../../../../components/button/HapticButton.react';
+import { useStore } from '@nanostores/react';
 import { EllipsisIcon } from 'lucide-react';
 import type React from 'react';
+import { HapticButton } from '../../../../components/button/HapticButton.react';
+import { useHydration } from '../../../../hooks/hydrate';
+import { LayoutSubheader } from '../../../_layouts/header/LayoutSubheader.react';
+import { bookScreenStore } from '../../_components/book-screen/BookScreen.state';
 
 /**
  * @jsx
