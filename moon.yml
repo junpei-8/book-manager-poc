@@ -46,9 +46,11 @@ tasks:
   ## Check ##
   ###########
 
-  # check-types:
-  #   inputs:
-  #     - '**/*'
-  #   options:
-  #     runInCI: true
-  #     priority: 'high'
+  check-types:
+    inputs:
+      - '**/*'
+    deps:
+      - '@apps/client:sync'
+    options:
+      runInCI: true
+      priority: 'high'

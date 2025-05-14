@@ -107,9 +107,6 @@ tasks:
   check-eslint:
     deps:
       - 'sync'
-  check-types:
-    deps:
-      - 'sync'
 
   ############
   ## Format ##
