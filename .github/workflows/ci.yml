@@ -26,8 +26,8 @@ jobs:
       - name: '📦 Cache pnpm artifacts'
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: '**/node_modules'
 
       - name: '🌑 Setup moonrepo'
         uses: 'moonrepo/setup-toolchain@v0'
