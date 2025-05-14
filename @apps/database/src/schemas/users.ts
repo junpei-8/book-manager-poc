@@ -13,53 +13,55 @@ export const usersTableName = 'users';
 /**
  * Users テーブル。
  */
-export const usersTable = sqliteTable(usersTableName, {
-  /**
-   * 主キー。
-   */
-  id: integer('id').primaryKey(),
+export const usersTable = sqliteTable(
+  usersTableName,
+  {
+    /**
+     * 主キー。
+     */
+    id: integer('id').primaryKey(),
 
-  /**
-   * 公開ID。
-   */
-  publicId: text('public_id').notNull().unique().default(publicIdSql),
+    /**
+     * 公開ID。
+     */
+    publicId: text('public_id').notNull().unique().default(publicIdSql),
 
-  /**
-   * 名前。
-   */
-  name: text('name').notNull(),
+    /**
+     * 名前。
+     */
+    name: text('name').notNull(),
 
-  /**
-   * メールアドレス。
-   */
-  email: text('email').notNull(),
+    /**
+     * メールアドレス。
+     */
+    email: text('email').notNull().unique(),
 
-  /**
-   * メールアドレスが確認されているかどうか。
-   */
-  emailVerified: integer('email_verified', { mode: 'boolean' })
-    .notNull()
-    .default(false),
+    /**
+     * メールアドレスが確認されているかどうか。
+     */
+    emailVerified: integer('email_verified', { mode: 'boolean' })
+      .notNull()
+      .default(false),
 
-  /**
-   * 画像。
-   */
-  image: text('image'),
+    /**
+     * 画像。
+     */
+    image: text('image'),
 
-  /**
-   * 作成日時。
-   */
-  createdAt: integer('created_at', { mode: 'timestamp_ms' })
-    .notNull()
-    .default(nowTimestampMsSql),
+    /**
+     * 作成日時。
+     */
+    createdAt: integer('created_at', { mode: 'timestamp_ms' })
+      .notNull()
+      .default(nowTimestampMsSql),
 
-  /**
-   * 更新日時。
-   */
-  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-    .notNull()
-    .default(nowTimestampMsSql),
-});
+    /**
+     * 更新日時。
+     */
+    updatedAt: integer('updated_at', { mode: 'timestamp_ms' }),
+  },
+  // NOTE: 現状 id, publicId, email は PK or UQ であるためインデックスを作成する必要がなく name は曖昧検索になることが多いため作成しない
+);
 
 /**
  * Users テーブルのリレーション。

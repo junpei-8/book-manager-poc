@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "4946bf03-9442-4e98-9590-fd15ac6f83f0",
+  "id": "dd3afd28-9997-4ed5-b12e-5b88c93ecdfb",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "user_accounts": {
@@ -104,9 +104,8 @@
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -202,9 +201,8 @@
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -214,6 +212,27 @@
             "public_id"
           ],
           "isUnique": true
+        },
+        "user_sessions_token_unique": {
+          "name": "user_sessions_token_unique",
+          "columns": [
+            "token"
+          ],
+          "isUnique": true
+        },
+        "user_sessions_token_index": {
+          "name": "user_sessions_token_index",
+          "columns": [
+            "token"
+          ],
+          "isUnique": false
+        },
+        "user_sessions_expires_at_index": {
+          "name": "user_sessions_expires_at_index",
+          "columns": [
+            "expires_at"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -286,9 +305,8 @@
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -298,6 +316,20 @@
             "public_id"
           ],
           "isUnique": true
+        },
+        "user_verifications_identifier_index": {
+          "name": "user_verifications_identifier_index",
+          "columns": [
+            "identifier"
+          ],
+          "isUnique": false
+        },
+        "user_verifications_expires_at_index": {
+          "name": "user_verifications_expires_at_index",
+          "columns": [
+            "expires_at"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},
@@ -364,9 +396,8 @@
           "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -374,6 +405,13 @@
           "name": "users_public_id_unique",
           "columns": [
             "public_id"
+          ],
+          "isUnique": true
+        },
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
           ],
           "isUnique": true
         }
