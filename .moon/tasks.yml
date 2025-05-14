@@ -52,7 +52,7 @@ tasks:
       - '--pretty'
       - '--verbose'
     options:
-      runInCI: false # Only run in root for CI
+      runInCI: true
 
   ############
   ## Format ##
