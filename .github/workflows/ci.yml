@@ -33,7 +33,7 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
 
       - name: '🌗 CI with moonrepo'
-        run: 'moon ci --log verbose --color'
+        run: 'moon ci --log info --color'
 
       - name: '🌕 Output retrospect with moonrepo'
         uses: appthrust/moon-ci-retrospect@v1
