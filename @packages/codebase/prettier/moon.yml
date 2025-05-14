@@ -1,6 +1,10 @@
 id: '@packages-codebase/prettier'
 type: 'library'
 stack: 'unknown'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
 
 project:
   description: 'Prettier configuration for codebase.'

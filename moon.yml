@@ -1,12 +1,8 @@
 # Documents: https://moonrepo.dev/docs/config/project
 
 id: 'root'
-
-workspace:
-  inheritedTasks:
-    include:
-      - 'exec'
-      - 'check-types'
+tags:
+  - 'typescript-root'
 
 dependsOn:
   - { id: '@packages-codebase/eslint', scope: 'development' }
@@ -41,13 +37,3 @@ tasks:
   release-publish:
     command: 'pnpm changeset publish'
     preset: 'server'
-
-  ###########
-  ## Check ##
-  ###########
-
-  check-types:
-    inputs:
-      - '**/*'
-    options:
-      runInCI: true

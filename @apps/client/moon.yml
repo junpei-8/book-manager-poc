@@ -1,6 +1,10 @@
 id: '@apps/client'
 type: 'application'
 stack: 'frontend'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
 
 project:
   name: 'Client'
@@ -43,9 +47,9 @@ tasks:
     options:
       envFile: '.dev.env'
 
-  ##########
-  ## Sync ##
-  ##########
+  ###########
+  ## Setup ##
+  #########3#
 
   sync:
     command: 'astro sync'
@@ -97,27 +101,12 @@ tasks:
     options:
       envFile: '.dev.env'
 
-  ###########
-  ## Check ##
-  ###########
+  ###########################
+  ## Lint (Check + Format) ##
+  ###########################
 
-  check-prettier:
+  lint-setup:
     deps:
-      - 'sync'
-  check-eslint:
-    deps:
-      - 'sync'
-  check-types:
-    deps:
-      - 'sync'
-
-  ############
-  ## Format ##
-  ############
-
-  format-prettier:
-    deps:
-      - 'sync'
-  format-eslint:
-    deps:
-      - 'sync'
+      - sync
+    options:
+      runInCI: true

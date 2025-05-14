@@ -1,6 +1,10 @@
 id: "@libs/shadcn"
 type: "library"
 stack: "unknown"
+tags:
+  - "eslint"
+  - "prettier"
+  - "typescript"
 
 project:
   description: "The shadcn helpers."
