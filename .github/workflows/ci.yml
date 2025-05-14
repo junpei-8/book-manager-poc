@@ -8,6 +8,8 @@ jobs:
   ci:
     name: ' 🤖 CI'
     runs-on: 'ubuntu-latest'
+    env:
+      PNPM_HOME: ${{ github.workspace }}/pnpm
 
     steps:
       - name: '🚚 Checkout branch'
@@ -24,14 +26,13 @@ jobs:
             .moon/cache/projects
             .moon/cache/types
           key: ${{ runner.os }}-moon-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-moon-
+          restore-keys: ${{ runner.os }}-moon-
 
-      - name: '📦 Cache node modules artifacts'
+      - name: '📦 Cache pnpm artifacts'
         uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
-          path: '**/node_modules'
+          path: '${{ env.PNPM_HOME }}/pnpm/store'
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: '🌑 Setup moonrepo'
         uses: 'moonrepo/setup-toolchain@v0'
