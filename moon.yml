@@ -51,3 +51,4 @@ tasks:
       - '**/*'
     options:
       runInCI: true
+      priority: 'high'

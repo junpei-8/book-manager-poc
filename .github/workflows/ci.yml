@@ -18,7 +18,7 @@ jobs:
       - name: '📦 Cache moon artifacts'
         uses: actions/cache@v4
         with:
-          path: .moon/cache
+          path: .moon/cache/{hashes,outputs,projects,types}
           key: ${{ runner.os }}-moon-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-moon-
@@ -33,7 +33,7 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
 
       - name: '🌗 CI with moonrepo'
-        run: 'moon ci --color'
+        run: 'moon ci --log verbose --color'
 
       - name: '🌕 Output retrospect with moonrepo'
         uses: appthrust/moon-ci-retrospect@v1
