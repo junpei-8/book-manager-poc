@@ -18,7 +18,11 @@ jobs:
       - name: '📦 Cache moon artifacts'
         uses: actions/cache@v4
         with:
-          path: .moon/cache/{hashes,outputs,projects,types}
+          path: |
+            .moon/cache/hashes
+            .moon/cache/outputs
+            .moon/cache/projects
+            .moon/cache/types
           key: ${{ runner.os }}-moon-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-moon-
