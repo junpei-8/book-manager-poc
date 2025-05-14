@@ -1,6 +1,10 @@
 id: '@packages-codebase/eslint'
 type: 'library'
 stack: 'unknown'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
 
 project:
   description: 'ESLint configuration for codebase.'

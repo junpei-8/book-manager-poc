@@ -1,6 +1,10 @@
 id: '@apps/database'
 type: 'library'
 stack: 'backend'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
 
 project:
   name: 'Database'

@@ -1,6 +1,10 @@
 id: '@packages-config/typescript'
 type: 'library'
 stack: 'unknown'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
 
 project:
   description: 'TypeScript configuration.'
