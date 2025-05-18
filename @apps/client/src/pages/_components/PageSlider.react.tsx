@@ -283,15 +283,19 @@ function SwiperPagination({
   return (
     <div className="fixed right-1.5 bottom-1.5 z-20 flex fade-in-animation gap-1 rounded-full bg-primary p-1.5 text-primary-foreground/40 shadow backdrop-blur md:right-2 md:bottom-2.5 md:gap-2 md:p-3">
       {icons.map((icon, index) => (
-        <div
+        <button
           key={index}
           className={cn(
-            'h-3 w-3 md:h-4 md:w-4 [&_svg]:h-full [&_svg]:w-full [&_svg]:stroke-[2.5px] md:[&_svg]:stroke-[3px]',
+            'h-3 w-3 cursor-pointer md:h-4 md:w-4 [&_svg]:h-full [&_svg]:w-full [&_svg]:stroke-[2.5px] md:[&_svg]:stroke-[3px]',
             currentIndex === index ? 'text-secondary' : null,
           )}
+          onClick={() => {
+            const swiper = pageSliderStore.swiperRef.current;
+            if (swiper) swiper.slideTo(index);
+          }}
         >
           {icon}
-        </div>
+        </button>
       ))}
     </div>
   );
