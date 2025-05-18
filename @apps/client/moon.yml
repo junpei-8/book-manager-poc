@@ -1,5 +1,4 @@
 id: '@apps/client'
-type: 'application'
 stack: 'frontend'
 tags:
   - 'eslint'

@@ -9,5 +9,7 @@ tags:
 project:
   description: 'TypeScript configuration.'
 
-# NOTE: @packages-codebase/eslint and @packages-codebase/prettier are not listed to avoid circular dependencies.
-dependsOn: []
+dependsOn:
+  []
+  # - { id: '@packages-codebase/eslint', scope: 'development' } # NOTE: Avoid circular dependencies.
+  # - { id: '@packages-codebase/prettier', scope: 'development' } # NOTE: Avoid circular dependencies.

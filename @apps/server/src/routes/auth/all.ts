@@ -14,8 +14,8 @@ export const authAllApi = new Hono().on(
     allowMethods: ['GET', 'POST', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length'],
-    maxAge: 600,
     credentials: true,
+    maxAge: 600,
   }),
   (c) => auth.handler(c.req.raw),
 );

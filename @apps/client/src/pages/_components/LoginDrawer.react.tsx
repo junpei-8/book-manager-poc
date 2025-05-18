@@ -33,13 +33,6 @@ export function LoginDrawer() {
       const response = await authClient.signIn.social({
         provider: 'google',
         callbackURL: `${window.location.origin}`,
-        // disableRedirect: true,
-        // fetchOptions: {
-        //   query: {
-        //     access_type: 'offline',
-        //     prompt: 'consent',
-        //   },
-        // },
       });
 
       if (response.error) {

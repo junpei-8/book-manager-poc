@@ -93,7 +93,7 @@ export const userAccountsTable = sqliteTable(
      */
     updatedAt: integer('updated_at', { mode: 'timestamp_ms' }),
   },
-  // NOTE: 現状 id, publicId, userId は PK or UQ であるためインデックスを作成する必要がないため
+  // NOTE: 現状 id, publicId, userId は PK or UQ であるためインデックスを作成する必要がない
 );
 
 /**

@@ -24,7 +24,6 @@ tasks:
   ############
 
   format-eslint:
-    type: 'run'
     command: 'eslint .'
     args:
       - '--fix'

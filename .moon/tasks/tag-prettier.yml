@@ -27,7 +27,6 @@ tasks:
   ############
 
   format-prettier:
-    type: 'run'
     command: 'prettier .'
     args:
       - '--write'

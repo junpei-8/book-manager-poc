@@ -1,5 +1,4 @@
 id: '@apps/database'
-type: 'library'
 stack: 'backend'
 tags:
   - 'eslint'

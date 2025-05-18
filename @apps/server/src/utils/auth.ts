@@ -1,16 +1,7 @@
-import {
-  userAccountsTable,
-  userAccountsTableName,
-} from '@apps/database/schemas/user-accounts';
-import {
-  userSessionsTable,
-  userSessionsTableName,
-} from '@apps/database/schemas/user-sessions';
-import {
-  userVerificationsTable,
-  userVerificationsTableName,
-} from '@apps/database/schemas/user-verifications';
-import { usersTable, usersTableName } from '@apps/database/schemas/users';
+import { userAccountsTable } from '@apps/database/schemas/user-accounts';
+import { userSessionsTable } from '@apps/database/schemas/user-sessions';
+import { userVerificationsTable } from '@apps/database/schemas/user-verifications';
+import { usersTable } from '@apps/database/schemas/users';
 import { betterAuth as betterAuthProvider } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { type Context } from 'hono';
@@ -37,20 +28,22 @@ export const auth = betterAuthProvider({
   // ## Models ##
   // ############
 
-  user: { modelName: usersTableName },
-  account: { modelName: userAccountsTableName },
-  session: { modelName: userSessionsTableName },
-  verification: { modelName: userVerificationsTableName },
-
   database: drizzleAdapter(db, {
     provider: 'sqlite',
     schema: {
-      [usersTableName]: usersTable,
-      [userAccountsTableName]: userAccountsTable,
-      [userSessionsTableName]: userSessionsTable,
-      [userVerificationsTableName]: userVerificationsTable,
+      user: usersTable,
+      account: userAccountsTable,
+      session: userSessionsTable,
+      verification: userVerificationsTable,
     },
   }),
+
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 600,
+    },
+  },
 
   // ######################
   // ## Social Providers ##
@@ -70,7 +63,7 @@ export const auth = betterAuthProvider({
   advanced: {
     defaultCookieAttributes: {
       secure: true,
-      httpOnly: false,
+      httpOnly: true,
       sameSite: 'none',
       partitioned: true,
     },
