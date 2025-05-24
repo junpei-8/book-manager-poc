@@ -1,4 +1,4 @@
-# Book Manager - クライアント向けドキュメント
+# Book Manager
 
 ## 概要
 
