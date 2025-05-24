@@ -1,6 +1,8 @@
 import { parseArgs } from 'node:util';
 import react from '@astrojs/react';
+import compress from '@playform/compress';
 import tailwindcss from '@tailwindcss/vite';
+import compressor from 'astro-compressor';
 import { defineConfig } from 'astro/config';
 import envSchema from './src/environments';
 
@@ -46,6 +48,26 @@ export default defineConfig({
      * @see {@link https://docs.astro.build/guides/integrations-guide/react | Astro React Integration}
      */
     react(),
+
+    /**
+     * @see {@link https://www.npmjs.com/package/@playform/compress | Compress}
+     */
+    compress({
+      HTML: true,
+      CSS: true,
+      JavaScript: true,
+      Image: true,
+      SVG: true,
+      JSON: true,
+      Logger: 1,
+    }),
+
+    /**
+     * @see {@link https://www.npmjs.com/package/astro-compressor | Astro Compressor}
+     */
+    compressor({
+      gzip: false,
+    }),
   ],
 
   server: {
@@ -57,7 +79,12 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      /**
+       * @see {@link https://tailwindcss.com/docs/guides/astro | Tailwind CSS for Astro}
+       */
+      tailwindcss(),
+    ],
     server: {
       port: DEV_PORT,
       host: DEV_TAURI_HOST,

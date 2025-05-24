@@ -79,6 +79,8 @@ words:
   - OPLMARCNO
   - PBNO
   - picklist
+  - playform
+  - codeowner
   - PLNO
   - polyrepo
   - proto
