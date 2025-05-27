@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "dd3afd28-9997-4ed5-b12e-5b88c93ecdfb",
+  "id": "54a35065-bb5f-48ae-99b1-ee68a0468052",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "user_accounts": {
-      "name": "user_accounts",
+    "user_auth_accounts": {
+      "name": "user_auth_accounts",
       "columns": {
         "id": {
           "name": "id",
@@ -109,8 +109,8 @@
         }
       },
       "indexes": {
-        "user_accounts_public_id_unique": {
-          "name": "user_accounts_public_id_unique",
+        "user_auth_accounts_public_id_unique": {
+          "name": "user_auth_accounts_public_id_unique",
           "columns": [
             "public_id"
           ],
@@ -118,9 +118,9 @@
         }
       },
       "foreignKeys": {
-        "user_accounts_user_id_users_id_fk": {
-          "name": "user_accounts_user_id_users_id_fk",
-          "tableFrom": "user_accounts",
+        "user_auth_accounts_user_id_users_id_fk": {
+          "name": "user_auth_accounts_user_id_users_id_fk",
+          "tableFrom": "user_auth_accounts",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -136,8 +136,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "user_sessions": {
-      "name": "user_sessions",
+    "user_auth_sessions": {
+      "name": "user_auth_sessions",
       "columns": {
         "id": {
           "name": "id",
@@ -206,29 +206,29 @@
         }
       },
       "indexes": {
-        "user_sessions_public_id_unique": {
-          "name": "user_sessions_public_id_unique",
+        "user_auth_sessions_public_id_unique": {
+          "name": "user_auth_sessions_public_id_unique",
           "columns": [
             "public_id"
           ],
           "isUnique": true
         },
-        "user_sessions_token_unique": {
-          "name": "user_sessions_token_unique",
+        "user_auth_sessions_token_unique": {
+          "name": "user_auth_sessions_token_unique",
           "columns": [
             "token"
           ],
           "isUnique": true
         },
-        "user_sessions_token_index": {
-          "name": "user_sessions_token_index",
+        "user_auth_sessions_token_index": {
+          "name": "user_auth_sessions_token_index",
           "columns": [
             "token"
           ],
           "isUnique": false
         },
-        "user_sessions_expires_at_index": {
-          "name": "user_sessions_expires_at_index",
+        "user_auth_sessions_expires_at_index": {
+          "name": "user_auth_sessions_expires_at_index",
           "columns": [
             "expires_at"
           ],
@@ -236,9 +236,9 @@
         }
       },
       "foreignKeys": {
-        "user_sessions_user_id_users_id_fk": {
-          "name": "user_sessions_user_id_users_id_fk",
-          "tableFrom": "user_sessions",
+        "user_auth_sessions_user_id_users_id_fk": {
+          "name": "user_auth_sessions_user_id_users_id_fk",
+          "tableFrom": "user_auth_sessions",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -254,8 +254,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "user_verifications": {
-      "name": "user_verifications",
+    "user_auth_verifications": {
+      "name": "user_auth_verifications",
       "columns": {
         "id": {
           "name": "id",
@@ -310,22 +310,22 @@
         }
       },
       "indexes": {
-        "user_verifications_public_id_unique": {
-          "name": "user_verifications_public_id_unique",
+        "user_auth_verifications_public_id_unique": {
+          "name": "user_auth_verifications_public_id_unique",
           "columns": [
             "public_id"
           ],
           "isUnique": true
         },
-        "user_verifications_identifier_index": {
-          "name": "user_verifications_identifier_index",
+        "user_auth_verifications_identifier_index": {
+          "name": "user_auth_verifications_identifier_index",
           "columns": [
             "identifier"
           ],
           "isUnique": false
         },
-        "user_verifications_expires_at_index": {
-          "name": "user_verifications_expires_at_index",
+        "user_auth_verifications_expires_at_index": {
+          "name": "user_auth_verifications_expires_at_index",
           "columns": [
             "expires_at"
           ],
@@ -333,6 +333,249 @@
         }
       },
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "user_book_collections": {
+      "name": "user_book_collections",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "public_id": {
+          "name": "public_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider_type": {
+          "name": "provider_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "authors": {
+          "name": "authors",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "categories": {
+          "name": "categories",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "thumbnail_url": {
+          "name": "thumbnail_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_dates": {
+          "name": "published_dates",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "user_book_collections_public_id_unique": {
+          "name": "user_book_collections_public_id_unique",
+          "columns": [
+            "public_id"
+          ],
+          "isUnique": true
+        },
+        "user_book_collections_provider_id_and_provider_type_unique_index": {
+          "name": "user_book_collections_provider_id_and_provider_type_unique_index",
+          "columns": [
+            "provider_id",
+            "provider_type"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "user_book_collections_user_id_users_id_fk": {
+          "name": "user_book_collections_user_id_users_id_fk",
+          "tableFrom": "user_book_collections",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "user_phrases": {
+      "name": "user_phrases",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "public_id": {
+          "name": "public_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(upper(substr(hex(cast((julianday('now') - 2440587.5) * 86400000 as integer)) || '000000000000', 1, 12) || substr(hex(randomblob(6)), 1, 12)))"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_book_collection_id": {
+          "name": "user_book_collection_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "page_number": {
+          "name": "page_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "user_phrases_public_id_unique": {
+          "name": "user_phrases_public_id_unique",
+          "columns": [
+            "public_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "user_phrases_user_id_users_id_fk": {
+          "name": "user_phrases_user_id_users_id_fk",
+          "tableFrom": "user_phrases",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_phrases_user_book_collection_id_user_book_collections_id_fk": {
+          "name": "user_phrases_user_book_collection_id_user_book_collections_id_fk",
+          "tableFrom": "user_phrases",
+          "tableTo": "user_book_collections",
+          "columnsFrom": [
+            "user_book_collection_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}

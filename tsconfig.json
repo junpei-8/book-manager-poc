@@ -1,5 +1,8 @@
 {
   "extends": "@packages-config/typescript/configs/base.json",
+  "compilerOptions": {
+    "outDir": ".moon/cache/types"
+  },
   "references": [
     {
       "path": "@apps/client"
@@ -9,6 +12,9 @@
     },
     {
       "path": "@apps/server"
+    },
+    {
+      "path": "@libs/error"
     },
     {
       "path": "@libs/shadcn"
@@ -22,8 +28,5 @@
     {
       "path": "@packages/config/typescript"
     }
-  ],
-  "compilerOptions": {
-    "outDir": ".moon/cache/types"
-  }
+  ]
 }

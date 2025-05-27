@@ -15,7 +15,7 @@ export function RootPageStatusMaintenanceView() {
     const element = elementRef.current;
     if (!element) return;
 
-    import('lottie-web/build/player/lottie_light.js').then(
+    void import('lottie-web/build/player/lottie_light.js').then(
       ({ default: lottie }) => {
         // アニメーションを読み込む
         lottie.loadAnimation({

@@ -472,7 +472,7 @@ export interface NDLOpenSearchItemV2_0 {
 export async function fetchNDLOpenSearchV2_0(params: NDLOpenSearchParamsV2_0) {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
-    if (value != null && value !== '') query.set(key, value.toString());
+    if (value != null && value !== '') query.set(key, `${value}`);
   }
 
   const NDL_API_ENDPOINT = 'https://iss.ndl.go.jp/api/opensearch';

@@ -1,9 +1,9 @@
 import { relations } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { nowTimestampMsSql } from './core/date';
-import { publicIdSql } from './core/id';
-import { userAccountsTable } from './user-accounts';
-import { userSessionsTable } from './user-sessions';
+import { nowTimestampMsSql } from './_core/date';
+import { publicIdSql } from './_core/id';
+import { userAuthAccountsTable } from './user-auth-accounts';
+import { userAuthSessionsTable } from './user-auth-sessions';
 
 /**
  * Users テーブルの名前。
@@ -67,6 +67,6 @@ export const usersTable = sqliteTable(
  * Users テーブルのリレーション。
  */
 export const usersRelations = relations(usersTable, ({ many }) => ({
-  sessions: many(userSessionsTable),
-  accounts: many(userAccountsTable),
+  sessions: many(userAuthSessionsTable),
+  accounts: many(userAuthAccountsTable),
 }));

@@ -1,0 +1,14 @@
+id: '@libs/error'
+tags:
+  - 'eslint'
+  - 'prettier'
+  - 'typescript'
+
+project:
+  name: 'Error'
+  description: 'Error'
+
+dependsOn:
+  - { id: '@packages-codebase/eslint', scope: 'development' }
+  - { id: '@packages-codebase/prettier', scope: 'development' }
+  - { id: '@packages-config/typescript', scope: 'development' }

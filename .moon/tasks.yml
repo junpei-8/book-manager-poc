@@ -33,9 +33,9 @@ tasks:
 
   format:
     deps:
-      - target: 'format-prettier'
-        optional: true
       - target: 'format-eslint'
+        optional: true
+      - target: 'format-prettier'
         optional: true
     options:
       runDepsInParallel: false

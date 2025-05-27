@@ -1,5 +1,5 @@
 import { createDBClient, type DBClient } from '@apps/database';
-import { env } from '..//bases/env';
+import { env } from '../bases/env';
 
 /**
  * Database client.

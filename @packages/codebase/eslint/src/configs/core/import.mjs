@@ -20,6 +20,7 @@ export default typescriptEslint.config(
       'import/resolver': { typescript: true },
     },
     plugins: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       import: importPlugin,
     },
     rules: {

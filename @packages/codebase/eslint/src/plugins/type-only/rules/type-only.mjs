@@ -30,6 +30,7 @@ export default defineRule({
       //  Rather than visiting all the nodes, we only need to query the top level statements.
       Program(program) {
         for (const programNode of program.body) {
+          /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
           switch (programNode.type) {
             /**
              * Blocking all exports.
@@ -231,6 +232,7 @@ export default defineRule({
               });
             }
           }
+          /* eslint-enable @typescript-eslint/no-unsafe-enum-comparison */
         }
       },
     };

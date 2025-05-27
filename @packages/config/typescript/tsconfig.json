@@ -1,8 +1,7 @@
 {
   "extends": "./src/configs/base.json",
   "compilerOptions": {
-    // TODO: Remove this once we have a better way to handle this.
-    "checkJs": false,
-    "outDir": "../../../.moon/cache/types/@packages/config/typescript"
+    "outDir": "../../../.moon/cache/types/@packages/config/typescript",
+    "types": ["@packages-config/typescript", "node"]
   }
 }

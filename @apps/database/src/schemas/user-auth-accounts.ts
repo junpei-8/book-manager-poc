@@ -1,19 +1,19 @@
 import { relations } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { nowTimestampMsSql } from './core/date';
-import { publicIdSql } from './core/id';
+import { nowTimestampMsSql } from './_core/date';
+import { publicIdSql } from './_core/id';
 import { usersTable } from './users';
 
 /**
  * User Accounts テーブルの名前。
  */
-export const userAccountsTableName = 'user_accounts';
+export const userAuthAccountsTableName = 'user_auth_accounts';
 
 /**
  * User Accounts テーブル。
  */
-export const userAccountsTable = sqliteTable(
-  userAccountsTableName,
+export const userAuthAccountsTable = sqliteTable(
+  userAuthAccountsTableName,
   {
     /**
      * 主キー。
@@ -99,11 +99,11 @@ export const userAccountsTable = sqliteTable(
 /**
  * ユーザーアカウントのリレーション。
  */
-export const userAccountsRelations = relations(
-  userAccountsTable,
+export const userAuthAccountsRelations = relations(
+  userAuthAccountsTable,
   ({ one }) => ({
     user: one(usersTable, {
-      fields: [userAccountsTable.userId],
+      fields: [userAuthAccountsTable.userId],
       references: [usersTable.id],
     }),
   }),

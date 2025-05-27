@@ -135,7 +135,7 @@ export function RootPageHeaderProfileDrawerWithTrigger() {
                 className="relative w-full"
                 variant="destructive"
                 onClick={() => {
-                  authClient.signOut();
+                  void authClient.signOut();
                 }}
               >
                 <LogOutIcon className="absolute left-4 size-4" />

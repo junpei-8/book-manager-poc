@@ -35,3 +35,5 @@ tasks:
         optional: true
       - target: 'format-setup'
         optional: true
+    options:
+      cache: false
