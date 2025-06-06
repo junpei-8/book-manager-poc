@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "@packages-config/typescript": "workspace:*",
-    "@types/node": "^22.15.18",
-    "@types/picomatch": "^4.0.0"
+    "@types/node": "^22.15.21"
   }
 }

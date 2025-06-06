@@ -41,9 +41,11 @@ export function BookScreenNewSearchDrawer() {
       open={isOpen}
       shouldScaleBackground
       repositionInputs={false}
-      onOpenChange={bookScreenNewSearchStore.isOpenDrawer.set}
-      onAnimationEnd={(open) => {
-        if (!open) bookScreenNewSearchStore.list.reset();
+      onOpenChange={(isOpen) =>
+        bookScreenNewSearchStore.isOpenDrawer.set(isOpen)
+      }
+      onAnimationEnd={(isOpen) => {
+        if (!isOpen) bookScreenNewSearchStore.list.reset();
       }}
     >
       <SearchDrawerContent />
@@ -64,7 +66,7 @@ const SearchDrawerContent = memo(() => (
         if (!property) return;
 
         event.preventDefault();
-        bookScreenNewSearchStore.list.update();
+        return bookScreenNewSearchStore.list.update();
       }}
     >
       <SearchDrawerHeader />
@@ -200,7 +202,7 @@ const SearchBarcodeScanner = memo(() => {
               fetching ? 'opacity-100' : 'opacity-0',
             )}
           >
-            <Loader2Icon className="text-white" />
+            <Loader2Icon className="animate-spin text-white" />
           </div>
         </div>
       </Scanner>

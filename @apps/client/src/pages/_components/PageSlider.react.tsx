@@ -246,17 +246,17 @@ function initializeSwiper(
 
             // ↓ 追加する
           } else {
-            const state = history.state || {};
+            const _state = history.state as Record<string, unknown>;
+            const state = typeof _state === 'object' ? _state : {};
+
+            const _index = state.index;
+            const index = typeof _index === 'number' ? _index + 1 : 1;
+
             routeHistory.push(slideLink);
-            history.pushState(
-              { ...state, index: (state.index || 0) + 1 },
-              '',
-              slideLink,
-            );
+            history.pushState({ ...state, index }, '', slideLink);
           }
         }
 
-        // edgeMoveBlocker.slideChange?.(swiper);
         options.on?.slideChange?.(swiper);
       },
       activeIndexChange: (swiper) => {

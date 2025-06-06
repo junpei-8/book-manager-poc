@@ -8,16 +8,16 @@
     "./schemas/*": "./src/schemas/*.ts"
   },
   "dependencies": {
-    "@libsql/client": "^0.15.5",
+    "@libsql/client": "^0.15.7",
     "drizzle-orm": "^0.41.0",
-    "es-toolkit": "^1.37.2",
+    "es-toolkit": "^1.38.0",
     "valibot": "^1.1.0"
   },
   "devDependencies": {
     "@packages-codebase/eslint": "workspace:*",
     "@packages-codebase/prettier": "workspace:*",
     "@packages-config/typescript": "workspace:*",
-    "@types/bun": "^1.2.13",
+    "@types/bun": "^1.2.14",
     "citty": "^0.1.6",
     "consola": "^3.4.2",
     "drizzle-kit": "^0.30.6"

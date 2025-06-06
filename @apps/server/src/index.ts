@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
+import { userBookCollectionsGetApi } from './routes/[userId]/book-collections/get';
 import { authAllApi } from './routes/auth/all';
-import { rootGetApi } from './routes/get';
 import { ndlBooksGetApi } from './routes/ndl/books/get';
 import { ndlBooksIsbnGetApi } from './routes/ndl/books/isbn/get';
 
@@ -11,7 +11,7 @@ import { ndlBooksIsbnGetApi } from './routes/ndl/books/isbn/get';
 const app = new Hono()
   .use('*', logger())
   .route('/api', authAllApi)
-  .route('/api', rootGetApi)
+  .route('/api', userBookCollectionsGetApi)
   .route('/api', ndlBooksGetApi)
   .route('/api', ndlBooksIsbnGetApi);
 

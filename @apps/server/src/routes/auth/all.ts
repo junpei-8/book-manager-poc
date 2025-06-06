@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { PRIVATE_AUTH_API_ACCESS_ORIGINS } from '../../bases/vars';
-import { auth } from '../../utils/auth';
+import { auth } from '../../utils/auth/provider';
 
 /**
  * Auth all API.

@@ -74,7 +74,7 @@ export const bookScreenNewSearchStore = {
       if (alreadyPromise) return alreadyPromise;
 
       const promise = this.fetch();
-      promise.finally(() => this.promise.set(null));
+      void promise.finally(() => this.promise.set(null));
 
       this.promise.set(promise);
       return promise;

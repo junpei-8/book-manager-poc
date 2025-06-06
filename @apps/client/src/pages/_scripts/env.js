@@ -8,9 +8,9 @@
   );
 
   /**
-   * @param   {any} os オペレーティングシステム
+   * @param   {any}                         os オペレーティングシステム
    *
-   * @returns {any}    オペレーティングシステムの種類
+   * @returns {'mobile' | 'pc' | 'unknown'}    オペレーティングシステムの種類
    */
   function getOsType(os) {
     return os === 'ios' || os === 'android'
@@ -24,7 +24,7 @@
   const isApp = !!app;
   if (isApp) {
     const os = app.os.type();
-    const osType = getOsType(os);
+    const osType = /** @type {'mobile' | 'pc'} */ (getOsType(os));
 
     env.context = 'app';
     env.app = { os, osType };

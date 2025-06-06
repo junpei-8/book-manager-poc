@@ -1,0 +1,11 @@
+{
+  "name": "@libs/error",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "devDependencies": {
+    "@packages-codebase/eslint": "workspace:*",
+    "@packages-codebase/prettier": "workspace:*",
+    "@packages-config/typescript": "workspace:*"
+  }
+}

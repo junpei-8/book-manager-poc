@@ -1,17 +1,17 @@
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { nowTimestampMsSql } from './core/date';
-import { publicIdSql } from './core/id';
+import { nowTimestampMsSql } from './_core/date';
+import { publicIdSql } from './_core/id';
 
 /**
  * User Verifications テーブルの名前。
  */
-export const userVerificationsTableName = 'user_verifications';
+export const userAuthVerificationsTableName = 'user_auth_verifications';
 
 /**
  * User Verifications テーブル。
  */
-export const userVerificationsTable = sqliteTable(
-  userVerificationsTableName,
+export const userAuthVerificationsTable = sqliteTable(
+  userAuthVerificationsTableName,
   {
     /**
      * 主キー。
@@ -19,7 +19,7 @@ export const userVerificationsTable = sqliteTable(
     id: integer('id').primaryKey(),
 
     /**
-     * ID。
+     * 公開ID。
      */
     publicId: text('public_id').notNull().unique().default(publicIdSql),
 
@@ -51,7 +51,7 @@ export const userVerificationsTable = sqliteTable(
     updatedAt: integer('updated_at', { mode: 'timestamp_ms' }),
   },
   (table) => {
-    const name = userVerificationsTableName;
+    const name = userAuthVerificationsTableName;
     return [
       // 識別子でのルックアップを高速化するためのインデックス
       index(`${name}_identifier_index`).on(table.identifier),

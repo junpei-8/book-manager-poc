@@ -24,7 +24,7 @@ export function Book({
   image?: string | null;
   scalable?: boolean;
   skeleton?: boolean;
-  fallback?: React.ReactNode | boolean;
+  fallback?: React.ReactNode;
   children?: React.ReactNode;
 } & React.JSX.IntrinsicElements['div' | 'a']) {
   const [hasLoadedImage, setHasLoadedImage] = useState(false);

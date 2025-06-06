@@ -1,25 +1,41 @@
 /** @jsxImportSource react */
 
 import { cn } from '@libs/shadcn/lib/utils';
-import { BookPlusIcon, PencilRulerIcon } from 'lucide-react';
-import { memo, useLayoutEffect, useState } from 'react';
+import { useStore } from '@nanostores/react';
+import { AlertTriangleIcon, BookPlusIcon, PencilRulerIcon } from 'lucide-react';
+import { memo } from 'react';
 import { Book } from '../../../../../components/book/Book.react';
 import { RichScrollableContainer } from '../../../../../components/container/RichScrollableContainer.react';
+import { type NanoQueryResult } from '../../../../../utils/nanoquery';
+import { rootPageHomeBookListsQuery } from './RootPageHomeBookLists.state';
 
 /**
  * @jsx
  */
 export function RootPageHomeBookLists() {
-  const [books, setBooks] = useState<any[]>([void 0, void 0, void 0, void 0]);
-  const [isLoadingBooks, setIsLoadingBooks] = useState(true);
-  const [isEmptyBooks, setIsEmptyBooks] = useState(false);
+  // #############
+  // ## My books #
+  // #############
 
-  useLayoutEffect(() => {
-    setTimeout(() => {
-      setIsLoadingBooks(false);
-      setIsEmptyBooks(true);
-    }, 2400);
-  }, []);
+  type MyBook = NonNullable<
+    NanoQueryResult<typeof rootPageHomeBookListsQuery.myBooks>['data']
+  >['items'][number];
+
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+  const { data: rawMyBooks, error: myBooksError } = useStore(
+    rootPageHomeBookListsQuery.myBooks,
+  );
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+
+  const isEmptyMyBooks = rawMyBooks?.items.length === 0;
+  const myBookItems =
+    rawMyBooks && !isEmptyMyBooks
+      ? rawMyBooks.items
+      : (Array.from({ length: 4 }, () => ({})) as Partial<MyBook>[]);
+
+  // ############
+  // ## Render ##
+  // ############
 
   return (
     <div className="flex flex-col gap-4 md:gap-8 lg:gap-12">
@@ -29,16 +45,27 @@ export function RootPageHomeBookLists() {
           <RichScrollableContainer
             className={cn(
               'relative z-10 wrapper flex-nowrap gap-4 bg-background py-4 sm:py-6',
-              isEmptyBooks ? 'pointer-events-none fade-out-animation' : null,
+              isEmptyMyBooks || myBooksError
+                ? 'pointer-events-none fade-out-animation'
+                : null,
             )}
-            disableMouseScroll={isEmptyBooks}
+            disableMouseScroll={isEmptyMyBooks}
             onTouchMoveCapture={(e) => e.stopPropagation()}
           >
-            {books.map((book, index) => (
-              <Book className="w-full min-w-[160px]" key={index} image={book} />
+            {myBookItems.map((book, index) => (
+              <Book
+                key={book.publicId || index}
+                className="w-full min-w-[160px]"
+                title={book.title}
+                image={book.thumbnailUrl}
+              />
             ))}
           </RichScrollableContainer>
-          {isEmptyBooks ? <NoBooksState /> : null}
+          {isEmptyMyBooks ? (
+            <NoBooksState />
+          ) : myBooksError ? (
+            <ErrorState />
+          ) : null}
         </div>
       </div>
 
@@ -85,6 +112,16 @@ const InProgressState = memo(() => (
     <div className="flex size-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-input bg-card p-4">
       <PencilRulerIcon className="size-16 text-muted-foreground/60" />
       <p className="text-center text-muted-foreground">近日公開予定</p>
+    </div>
+  </div>
+));
+
+/** @ignore */
+const ErrorState = memo(() => (
+  <div className="absolute inset-0 z-0 wrapper size-full px-4 py-4 sm:py-6">
+    <div className="flex size-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-input bg-card p-4">
+      <AlertTriangleIcon className="size-16 text-destructive/60" />
+      <p className="text-center text-destructive">エラーが発生しました</p>
     </div>
   </div>
 ));

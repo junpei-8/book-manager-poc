@@ -2,8 +2,6 @@
   "name": "@apps/server",
   "private": true,
   "type": "module",
-  "main": "./src/index.d.js",
-  "types": "./src/index.d.ts",
   "exports": {
     ".": "./src/index.d.ts",
     "./*.type": "./src/*.type.ts",
@@ -12,21 +10,21 @@
   "dependencies": {
     "@apps/database": "workspace:*",
     "@hono/valibot-validator": "^0.5.2",
-    "better-auth": "^1.2.7",
+    "better-auth": "^1.2.8",
     "drizzle-orm": "^0.41.0",
-    "es-toolkit": "^1.37.2",
+    "es-toolkit": "^1.38.0",
     "fast-xml-parser": "^5.2.3",
-    "hono": "^4.7.9",
+    "hono": "^4.7.10",
     "valibot": "^1.1.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.2.0",
-    "@cloudflare/workers-types": "^4.20250514.0",
-    "@hono/vite-build": "^1.6.1",
+    "@cloudflare/vite-plugin": "^1.2.4",
+    "@cloudflare/workers-types": "^4.20250525.0",
+    "@hono/vite-build": "^1.6.2",
     "@packages-codebase/eslint": "workspace:*",
     "@packages-codebase/prettier": "workspace:*",
     "@packages-config/typescript": "workspace:*",
     "vite": "^6.3.5",
-    "wrangler": "^4.14.4"
+    "wrangler": "^4.16.1"
   }
 }

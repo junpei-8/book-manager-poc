@@ -1,19 +1,19 @@
 import { relations } from 'drizzle-orm';
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { nowTimestampMsSql } from './core/date';
-import { publicIdSql } from './core/id';
+import { nowTimestampMsSql } from './_core/date';
+import { publicIdSql } from './_core/id';
 import { usersTable } from './users';
 
 /**
  * User Sessions テーブルの名前。
  */
-export const userSessionsTableName = 'user_sessions';
+export const userAuthSessionsTableName = 'user_auth_sessions';
 
 /**
  * User Sessions テーブル。
  */
-export const userSessionsTable = sqliteTable(
-  userSessionsTableName,
+export const userAuthSessionsTable = sqliteTable(
+  userAuthSessionsTableName,
   {
     /**
      * 主キー。
@@ -65,7 +65,7 @@ export const userSessionsTable = sqliteTable(
     updatedAt: integer('updated_at', { mode: 'timestamp_ms' }),
   },
   (table) => {
-    const name = userSessionsTableName;
+    const name = userAuthSessionsTableName;
     return [
       // トークンでのルックアップを高速化するためのインデックス
       index(`${name}_token_index`).on(table.token),
@@ -79,11 +79,11 @@ export const userSessionsTable = sqliteTable(
 /**
  * ユーザーセッションのリレーション。
  */
-export const userSessionsRelations = relations(
-  userSessionsTable,
+export const userAuthSessionsRelations = relations(
+  userAuthSessionsTable,
   ({ one }) => ({
     user: one(usersTable, {
-      fields: [userSessionsTable.userId],
+      fields: [userAuthSessionsTable.userId],
       references: [usersTable.id],
     }),
   }),
