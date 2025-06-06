@@ -37,6 +37,7 @@
     "${configDir}/dist",
     "${configDir}/build",
     "${configDir}/.*",
+    "${configDir}/**/_",
     "${configDir}/**/@*"
   ]
 }
